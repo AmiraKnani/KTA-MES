@@ -1,0 +1,36 @@
+
+  
+  .avatar-container:hover .pop-up-box {
+    display: block;
+  }
+  
+  .pop-up-items {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+  }
+  
+  .pop-up-item {
+    padding: 8px 0;
+    cursor: pointer;
+  }
+  
+  .pop-up-item:hover {
+    background-color: #f1f1f1;
+  }
+  .email{
+    position:relative;
+    left:0;
+    width: 100%;
+    font-family: "Lato", Arial, sans-serif;
+    font-weight: 200;
+    font-size: 15px;
+  }  
+  .username{
+    position:relative;
+    left:0;
+    width: 100%;
+    font-family: "Lato", Arial, sans-serif;
+    font-weight: 300;
+    font-size: 20px;
+  }

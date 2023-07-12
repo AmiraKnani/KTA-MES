@@ -1,0 +1,22 @@
+.bar {
+    width: auto;
+    height: 130px;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    color: white;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 1000;
+    padding-left: 90px;
+    padding-top: 60px;
+    border: none; 
+  }
+  
+  .bar p {
+    margin-top: 20px;
+    font-size: 24px;
+  }
+  

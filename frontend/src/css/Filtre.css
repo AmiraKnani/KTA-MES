@@ -1,0 +1,65 @@
+.show-content {
+    display: block;
+}
+
+.column {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    align-items: flex-start;
+
+}
+
+.parent1 {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    flex-wrap: wrap;
+    order: 2;
+
+}
+
+.choice {
+    margin: 10px 0;
+    cursor: pointer;
+    font-family: 'Arial', sans-serif;
+    font-size: 1.2em;
+    transition: color 0.3s ease;
+    border-bottom: 1px solid #ccc;
+
+
+}
+
+.choice:hover {
+    color: #007BFF;
+}
+
+
+.header-filter {
+    color: #334D6E;
+    font-size: large;
+    background-color: #ffffff;
+    padding: 16px;
+    font-weight: bold;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.content {
+    max-height: 287px;
+
+}
+
+.custom-datepicker {
+  background: rgba(255, 255, 255, 0.8)!important; /* You can adjust the last value (0.8) to change the level of transparency */
+  order: 1;
+}
+
+.datepicker-popper {
+  position: absolute;
+  top: -200px; /* Adjust this value to change the vertical positioning of the calendar */
+  left: 0px; /* Adjust this value to change the horizontal positioning of the calendar */
+  transform: translate3d(-50%, -50%, 0); /* Adjust this value to control the transform-origin */
+  z-index: 100; /* This ensures the calendar will overlay other elements */
+}

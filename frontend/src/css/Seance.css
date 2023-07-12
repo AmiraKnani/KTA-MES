@@ -1,0 +1,54 @@
+.collapsible-box {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    cursor: pointer;
+    /* Add additional styles as needed */
+  }
+  
+  .content {
+    display: none;
+    /* Add additional styles as needed */
+    
+  }
+  
+  .show-content {
+    display: block;
+  }
+  
+  .row {
+    display: flex;
+    flex-wrap: wrap;
+    /* Add additional styles as needed */
+  }
+  
+  .parent {
+    display: flex;
+    flex: 1;
+    flex-wrap: wrap;
+    /* Add additional styles as needed */
+  }
+  
+  .box {
+    flex: 1 0 50%;
+    min-width: 100px;
+    max-width:15%;
+    margin-left: 2%;
+    margin-right: 2%;
+    margin-top: 1%;
+    /* Add additional styles as needed */
+  }
+  
+  .box-content {
+    /* Add additional styles as needed */
+  }
+
+ 
+  
+  
+  
