@@ -111,7 +111,9 @@ fs.createReadStream(filePath)
     });
   });
 
-  app.use(express.json());
+app.use(express.json()); 
+
+
   //generate the code
   app.post('/api/coderequest', async (req, res) => {
     // Access the received data from the request body
@@ -202,3 +204,46 @@ fs.createReadStream(filePath)
     res.json({ success:success, error:err});
   });
   //stock user login status
+
+
+
+  
+  /* Connection to MongoDB
+
+async function fetchFromDatabase() {
+  try {
+    await client.connect();
+    const database = client.db("Logidas");
+    const collection = database.collection("datas");  // Connect to the 'datas' collection.
+
+    const data = await collection.find({}).toArray();
+    return data;
+  } finally {
+    await client.close();
+  }
+}
+
+// Fetch data from database and start the server
+fetchFromDatabase()
+.then(data => {
+  const distinctPostes = [...new Set(data.map(doc => doc.Poste))];
+  console.log(distinctPostes);
+
+    app.get('/data', (req, res) => {
+      let totalProductivityRate = 0;
+      const results = [...new Set(data.map(doc => doc.Poste))];
+      for (let i = 0; i < results.length; i++) {
+        totalProductivityRate += Number(results[i].TauxRendementSynthetique);
+      }
+      const moy = totalProductivityRate / results.length;
+
+      res.json({ data: results, moy, numPostes: results.length });
+    });
+
+    app.listen(5000, () => {
+      console.log('Server started on port 5000');
+    });
+  })
+  .catch(err => {
+    console.error('Error fetching data from MongoDB:', err);
+  }); */

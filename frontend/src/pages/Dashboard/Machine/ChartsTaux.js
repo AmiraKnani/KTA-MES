@@ -22,7 +22,7 @@ return(
   <div className="item">
   <div className="collapsible-boxtaux cbtd">
     <div className="headertaux ctd" >
-    Taux de disponibitlié
+    Taux de performance
         </div>
     <div className='show-content'>
       <div className='row'>
@@ -44,7 +44,7 @@ return(
           <XAxis dataKey="poste" />
           <YAxis  tickFormatter={formatter}/>
           <Tooltip content={<CustomTooltip />}/>
-          <Area type="monotone" dataKey="tauxProductivite" stroke="#19ACA3" fill="#19ACA3" />
+          <Area type="monotone" dataKey="tauxProductivite" stroke="#1F69EF" fill="#1F69EF" />
         </AreaChart>
         </ResponsiveContainer>
         </div>
@@ -56,7 +56,7 @@ return(
   <div className="item">
      <div className="collapsible-boxtaux cbtd1">
     <div className="headertaux ctd1" >
-    Production
+    Taux de qualité
         </div>
     <div className='show-content'>
       <div className='row'>
@@ -78,7 +78,7 @@ return(
           <XAxis dataKey="poste" />
           <YAxis  tickFormatter={formatter}/>
           <Tooltip content={<CustomTooltip />}/>
-          <Area type="monotone" dataKey="tauxProductivite" stroke="#8ADEAC" fill="#8ADEAC" />
+          <Area type="monotone" dataKey="tauxProductivite" stroke="#3367A8" fill="#3367A8" />
         </AreaChart>
         </ResponsiveContainer>
         </div>
@@ -89,7 +89,7 @@ return(
   <div className="item">
   <div className="collapsible-boxtaux cbtd2">
     <div className="headertaux ctd2" >
-    Attente matiére
+    Taux de rendement globale
         </div>
     <div className='show-content'>
       <div className='row'>
@@ -111,7 +111,7 @@ return(
           <XAxis dataKey="poste" />
           <YAxis  tickFormatter={formatter}/>
           <Tooltip content={<CustomTooltip />}/>
-          <Area type="monotone" dataKey="tauxProductivite" stroke="#9E4FFF" fill="#9E4FFF" />
+          <Area type="monotone" dataKey="tauxProductivite" stroke="#C18A20" fill="#C18A20" />
         </AreaChart>
         </ResponsiveContainer>
         </div>
@@ -121,9 +121,9 @@ return(
   </div>
   </div>
   <div className="item">
-  <div className="collapsible-boxtaux cbtd1">
-    <div className="headertaux ctd" >
-    Service
+  <div className="collapsible-boxtaux cbtd3">
+    <div className="headertaux ctd3" >
+    Taux économique
         </div>
     <div className='show-content'>
       <div className='row'>
@@ -145,7 +145,7 @@ return(
           <XAxis dataKey="poste" />
           <YAxis  tickFormatter={formatter}/>
           <Tooltip content={<CustomTooltip />}/>
-          <Area type="monotone" dataKey="tauxProductivite" stroke="#41C3DF" fill="#41C3DF" />
+          <Area type="monotone" dataKey="tauxProductivite" stroke="#5EA131" fill="#5EA131" />
         </AreaChart>
         </ResponsiveContainer>
         </div>

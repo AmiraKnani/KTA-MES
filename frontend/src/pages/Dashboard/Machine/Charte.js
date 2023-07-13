@@ -72,6 +72,8 @@ function Charte() {
   const checkboxRefC = useRef()
   const checkboxRefD = useRef()
   const selecRef = useRef()
+//csv data
+
   const [backendData, setBackenData] = useState([{}])
   useEffect(() => {
     fetch("/data").then(
@@ -82,10 +84,31 @@ function Charte() {
       }
     )
   }
-  )
+)
   var m = backendData.data
 
+
+  //mongodb data
+  {/*const [backendData, setBackendData] = useState([]);
+
+  useEffect(() => {
+    fetch('/data')
+      .then(response => response.json())
+      .then(result => {
+        setBackendData(result);
+      })
+      .catch(error => {
+        console.error('Error fetching data:', error);
+      });
+  }, []);
+  var m = backendData.data*/}
+
+  
+
+
   let posts = []
+
+
   let obj = []
   const handleChangeSelect = selectedOption => {
     checkboxRefA.current.checked = false
@@ -202,6 +225,7 @@ function Charte() {
     }
     posts.push(obj)
   }
+
 
   const [startDate, setStartDate] = useState(new Date());
   const [isOpen, setIsOpen] = useState(true);

@@ -363,8 +363,11 @@ font-size:50px;
   margin-top: 10px;
 
 }
+
+
 .collapsible-box {
   border: 1px solid #ddd;
+  box-shadow: 0 0 10px rgba(76, 78, 161, 0.3); 
   border-radius: 8px;
   margin-top: 20px;
 }
@@ -415,29 +418,29 @@ font-size:50px;
 
 
 .ctd{
-  background-color: #19ACA3;
+  background-color: #1F69EF;
 }
 .cbtd{
-  border: 3px solid #19ACA3;
+  border: 3px solid #1F69EF;
 }
 .ctd1{
-  background-color: #8ADEAC;
+  background-color: #3367A8;
 }
 .cbtd1{
-  border: 3px solid #8ADEAC;
+  border: 3px solid #3367A8;
 }
 
 .ctd2{
-  background-color: #9E4FFF;
+  background-color: #C18A20;
 }
 .cbtd2{
-  border: 3px solid #9E4FFF;
+  border: 3px solid #C18A20;
 }
 .ctd3{
-  background-color: #41C3DF;
+  background-color: #5EA131;
 }
 .cbtd3{
-  border: 3px solid #41C3DF;
+  border: 3px solid #5EA131;
 }
 .perc {
   display: flex;

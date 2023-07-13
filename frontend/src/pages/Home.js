@@ -315,7 +315,6 @@ export default function MiniDrawer() {
                 : view==="Produit"? produit
                 : dashboard  
               }
-          
       <Footer view="dash"/> 
       </Box>
     </Box></>
