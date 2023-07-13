@@ -1,3 +1,8 @@
+import Dialog from '@mui/material/Dialog';
+import DialogTitle from '@mui/material/DialogTitle';
+import DialogContent from '@mui/material/DialogContent';
+import DialogActions from '@mui/material/DialogActions';
+import Button from '@mui/material/Button';
 import { useEffect, useState, useRef } from 'react';
 import makeAnimated from 'react-select/animated';
 import Select from 'react-select';
@@ -16,12 +21,34 @@ import Card from './Card';
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import '../../../css/Filtre.css'
+import { registerLocale, setDefaultLocale } from "react-datepicker";
+import fr from 'date-fns/locale/fr'; // or your preferred locale
+registerLocale('fr', fr);
+setDefaultLocale('fr');
 
 
 function Charte() {
-  const [isCollapsed, setIsCollapsed] = useState(true);
-  const toggleContent = () => {
-    setIsCollapsed(!isCollapsed);
+  const [dialogOpen, setDialogOpen] = useState(false);
+  const [selectedPeriod, setSelectedPeriod] = useState("");
+  const [isFilterCollapsed, setIsFilterCollapsed] = useState(true);
+  const [isSearchCollapsed, setIsSearchCollapsed] = useState(true);
+  const toggleFilterContent = () => {
+    setIsFilterCollapsed(!isFilterCollapsed);
+  };
+
+  
+
+  const handlePeriodSelection = (period) => {
+    setSelectedPeriod(period);
+    setDialogOpen(true);
+  }
+
+  const handleClose = () => {
+    setDialogOpen(false);
+  }
+
+  const toggleSearchContent = () => {
+    setIsSearchCollapsed(!isSearchCollapsed);
   };
 
   const customStyles = {
@@ -177,11 +204,8 @@ function Charte() {
   }
 
   const [startDate, setStartDate] = useState(new Date());
-  const [isOpen, setIsOpen] = useState(false);
-  const handlePeriodSelection = (period) => {
-    console.log(period); // Here you can handle different periods differently
-    setIsOpen(true);
-  }
+  const [isOpen, setIsOpen] = useState(true);
+  
 
 
   const formatter = (value) => `${value * 100}%`;
@@ -194,10 +218,9 @@ function Charte() {
         </div>
       );
     }
-    const handlePeriodSelection = (period) => {
-      console.log(period); // Here you can handle different periods differently
-      setIsOpen(true);
-    }
+    
+
+    
     return null;
   };
 
@@ -264,40 +287,65 @@ function Charte() {
         </div>
         <div className="container">
           <div className="filter-component">
-            <div className="header-chart" onClick={toggleContent}>
-              Séance
-              <IconButton onClick={toggleContent}>
-                {isCollapsed ? <ExpandMore /> : <ExpandLess />}
+            <div className="header-chart" onClick={toggleFilterContent}>
+              Période
+              <IconButton onClick={toggleFilterContent}>
+                {isFilterCollapsed ? <ExpandMore /> : <ExpandLess />}
               </IconButton>
             </div>
-            <div className={`content ${isCollapsed ? '' : 'show-content'}`}>
+            <div className={`content ${isFilterCollapsed ? '' : 'show-content'}`}>
               <div className="column">
-                <DatePicker
-                  selected={startDate}
-                  onChange={(date) => setStartDate(date)}
-                  open={isOpen}
-                  onInputClick={() => setIsOpen(!isOpen)}
-                  calendarClassName="custom-datepicker"
-                />
+                
                 <div className="parent1">
-                  <div className="choice" onClick={() => handlePeriodSelection('day')}>Jour</div>
-                  <div className="choice" onClick={() => handlePeriodSelection('week')}>Semaine</div>
-                  <div className="choice" onClick={() => handlePeriodSelection('month')}>Mois</div>
-                  <div className="choice" onClick={() => handlePeriodSelection('quarter')}>Trimestre</div>
-                </div>
+      <div className="choice" onClick={() => handlePeriodSelection('seance')}>Séance</div>
+      <div className="choice" onClick={() => handlePeriodSelection('day')}>Jour</div>
+      <div className="choice" onClick={() => handlePeriodSelection('week')}>Semaine</div>
+      <div className="choice" onClick={() => handlePeriodSelection('month')}>Mois</div>
+      <div className="choice" onClick={() => handlePeriodSelection('quarter')}>Trimestre</div>
+    </div>
+
+    <Dialog onClose={handleClose} open={dialogOpen} PaperProps={{style: {width: '22%', height: '60%'}}}>
+      <DialogTitle>Choisissez une période</DialogTitle>
+      <DialogContent>
+        {selectedPeriod === 'seance' && (
+          <>
+            <Button onClick={() => console.log('Matin')}>Matin</Button>
+            <Button onClick={() => console.log('Soir')}>Soir</Button>
+            <Button onClick={() => console.log('Nuit')}>Nuit</Button>
+          </>
+        )}
+        {selectedPeriod !== 'seance' && (
+          <DatePicker
+          selected={startDate}
+          onChange={(date) => setStartDate(date)}
+          open={isOpen}
+          onInputClick={() => setIsOpen(!isOpen)}
+          calendarClassName="custom-datepicker"
+          dateFormat={selectedPeriod === 'month' ? 'MM/yyyy' : 'MM/dd/yyyy'}
+          showMonthYearPicker={selectedPeriod === 'month'}
+          showWeekNumbers={selectedPeriod === 'week'}
+          monthsShown={selectedPeriod === 'quarter' ? 3 : 1}
+        />
+        )}
+      </DialogContent>
+      <DialogActions>
+        <Button onClick={handleClose}>Close</Button>
+      </DialogActions>
+    </Dialog>
+
               </div>
 
             </div>
           </div>
           <div className="search-component">
             <div className="collapsible-box1">
-              <div className="header-chart" onClick={toggleContent}>
+              <div className="header-chart" onClick={toggleSearchContent}>
                 Poste
-                <IconButton onClick={toggleContent}>
-                  {isCollapsed ? <ExpandMore /> : <ExpandLess />}
+                <IconButton onClick={toggleSearchContent}>
+                  {isSearchCollapsed ? <ExpandMore /> : <ExpandLess />}
                 </IconButton>
               </div>
-              <div className={`content ${isCollapsed ? '' : 'show-content'}`}>
+              <div className={`content ${isSearchCollapsed ? '' : 'show-content'}`}>
                 <div className='selectcont'>
                   <Select
                     className='select'

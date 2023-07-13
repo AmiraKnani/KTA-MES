@@ -54,14 +54,11 @@ export const ContactUs = () => {
             <form ref={form} onSubmit={sendEmail} className="login-form">
               <div className="form-group">
                 <div className="rez">
-                <div className='ld'>
-                <label>Nom</label>
+                <div className='child'>
+                <label>Nom d'utilisateur</label>
                 <Input  name="nom" type="text" align="center" />
                 </div>
-                <div className='rd'>
-                <label>Prénom</label>
-                <Input  name="prenom" type="text" align="center" size="medium" />
-                </div>
+                
                 </div>
               </div>
               <div className="form-group">
@@ -77,24 +74,31 @@ export const ContactUs = () => {
                   <label >Nom de l’entreprise</label>
                 <Input  name="societe" type="text" align="center" />
                 </div>
-               <div className="child">
-                  <label >Déscription</label>
-                  <TextareaAutosize style={{ maxHeight: '100px' }}  id="taas" name="desc" />          
+                <div className="form-group">
+                <div className="child">
+                  <label >Mot De Passe</label>
                 </div>
+                <Input  name="pass" type="password" align="center" />
+              </div>
                 <input id="ddd" type="submit" value="Nous-contactez"/>
               <div className="cont"><Link to="/">Connecter</Link></div>
 
               </div>
 
             </form>
+            <div className="centered-footer">
+            <center><h2><Footer/></h2></center>
+            </div>
           </div>
 
-          <Footer />
+          
 
         </div>
-      <div className="right-section">
-        <p className="leftp">contactez-nous pour plus de détails sur notre KTA MES 8032</p>
-      </div>
+        <div className="right-section">
+          <p className="leftp">Créer un compte pour superviser votre entreprise via la station KTA MES 8320</p>
+          <p className="leftp1">Station de pilotage des ressources de l'entreprise à distance et en temps réel</p>
+
+        </div>
     </div>
     <ToastContainer
     position="top-right"

@@ -254,7 +254,7 @@ export default function MiniDrawer() {
                >       
                <PrecisionManufacturingIcon style={{ color: '#FFFFFF' }}  />
               </ListItemIcon>
-               <ListItemText primary="machine" sx={{ opacity: open ? 1 : 0 }} />
+               <ListItemText primary="Machine" sx={{ opacity: open ? 1 : 0 }} />
              </ListItemButton>
 
            </ListItem>

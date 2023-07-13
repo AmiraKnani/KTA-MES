@@ -38,7 +38,9 @@
 }
 
 
-
+.collapsible-box2{
+  padding-top: 20px;
+}
 
 
 .kta-8320 {
@@ -84,6 +86,7 @@ height: 100%;
   display: flex;
   justify-content: space-between;
   margin-bottom: 10px;
+  
 }
 .progbar{
   width: 60%;
@@ -188,8 +191,9 @@ font-size:50px;
 }
 
 .child input {
+  
   width: 50%;
-  padding: 10px;
+  padding: 7px;
   font-size: 16px;
   border-radius: 4px;
   background: rgba(166, 175, 207, 0.85);
@@ -240,7 +244,7 @@ font-size:50px;
   font-family: "Lato", Arial, sans-serif;
   font-weight: 300;
   margin-top: 30px;
-  margin-bottom: 0;
+  margin-bottom: -15px;
 }
 
 .form-group Input {
@@ -317,13 +321,14 @@ font-size:50px;
   align-items: center;
   width: 80%;
   padding: 20px;
+  
 }
 .parent1 {
   display: flex;
   top:0;
   width: 80%;
   min-height: 600px;
-  padding: 20px;
+  padding-left: 20px;
 }
 
 .box1 {
@@ -336,7 +341,7 @@ font-size:50px;
     width: 250px; 
     height: 170px;
     overflow: auto; 
-  
+
   
 }
 
@@ -514,14 +519,17 @@ font-size:50px;
 }
 
 .card{
-  width:100% ;
+  width:90% ;
   min-height: 4em;
+  border: 3px solid transparent;
+  box-shadow: 0 0 10px rgba(76, 78, 161, 0.3); 
+  border-radius: 8px;
 }
 .incard{
 margin-bottom: 10px;
 }
 .bosx1{
-  background-color:#F9F9F9;
+  background-color:white;
   min-height: 100px;
 }
 .nav{
