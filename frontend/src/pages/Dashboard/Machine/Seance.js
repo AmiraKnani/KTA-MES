@@ -24,7 +24,7 @@ function Seance(props) {
     
     <div className="collapsible-box">
       <div className="header-chart" onClick={toggleContent}>
-        Séance
+        
         <IconButton onClick={toggleContent}>
           {isCollapsed ? <ExpandMore /> : <ExpandLess />}
         </IconButton>

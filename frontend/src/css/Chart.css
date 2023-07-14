@@ -90,9 +90,46 @@
 .header-chart {
   color: #334D6E;
   font-size: large;
-  background-color: #ffffff;
+
   padding: 16px;
   font-weight: bold;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+
+
+
+.header-chart1 {
+  color: #334D6E;
+  font-size: large;
+ 
+  padding: 16px;
+  margin-left: 5%;
+  margin-right: 5%;
+  font-weight: bold;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.header-chartP {
+  color: #334D6E;
+  font-size: large;
+  padding: 16px;
+  font-weight:lighter;
+  display: flex;
+  
+  align-items:normal;
+}
+
+.header-data {
+  color: #626389;
+  font-size:medium;
+  padding: 16px;
+  margin-left: 5%;
+  margin-right: 5%;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -140,6 +177,29 @@
   height: 400px; /* change this value according to your needs */
 }
 
+.collapsible-tauxT {
+  border: 3px solid transparent;
+  box-shadow: 0 0 10px rgba(76, 78, 161, 0.3); 
+  border-radius: 8px;
+  width: 250%;
+  display: inline-block;
+  vertical-align: top;
+  margin-right: 2rem;
+  height: 60px;
+}
+
+.collapsible-table {
+  border: 3px solid transparent;
+  box-shadow: 0 0 10px rgba(76, 78, 161, 0.3); 
+  border-radius: 8px;
+  width: 100%;
+  display: inline-block;
+  vertical-align: top;
+  margin-right: 2rem;
+  margin-top: 0.5rem;
+  height: 60px;
+}
+
 
 .parent-container {
   display: flex;
@@ -154,6 +214,8 @@
   vertical-align: middle;
   margin-bottom: 10px;
 }
+
+
 
 .search-component{
   border: 3px solid transparent;

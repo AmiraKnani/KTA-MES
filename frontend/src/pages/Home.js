@@ -24,6 +24,7 @@ import '../css/App.css'
 import Header from '../components/Header'
 import Footer from '../components/Footer'
 import  Title  from '../pages/Dashboard/Machine/Title';
+import Table from './Dashboard/Machine/Table'
 
 
 
@@ -175,6 +176,9 @@ export default function MiniDrawer() {
       <ChartsTaux data={backendData}/>
     </div>
 
+    <div>
+      <Table/>
+    </div> 
 
     </>
    );
@@ -315,7 +319,8 @@ export default function MiniDrawer() {
                 : view==="Produit"? produit
                 : dashboard  
               }
-      <Footer view="dash"/> 
+              <br/> 
+      <div><br/><br/><Footer view="dash"/> </div>
       </Box>
     </Box></>
   );
