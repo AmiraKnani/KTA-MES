@@ -300,6 +300,10 @@ function Table() {
             <div className="header-data" >
               P214 <tr/> Ebavureuse - Mat:01050117  <tr /> <div style={{backgroundColor: '#5db82191', color: '#3B671D', borderRadius: '5px'}}>Production</div>
             </div></div>
+            <div className="collapsible-table">
+            <div className="header-data" >
+            P204 <tr/> Griffage 2006172 (GR-06)  <tr /> <div style={{backgroundColor: '#ec101091', color: '#C41313', borderRadius: '5px', minWidth: '76px',textAlign:'center'}}>Arrêt</div>
+            </div></div>
 
         </div>
 

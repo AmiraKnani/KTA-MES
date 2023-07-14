@@ -189,7 +189,7 @@ export default function MiniDrawer() {
 
   return (<>
 <Header/>
-<Title pageTitle="Suivi des états de machine" />
+<Title pageTitle="Suivi des états des postes de travail" />
     <Box style={{overflow:'hidden'}} sx={{ display: 'flex' }}>
       <CssBaseline />
       <Drawer className='nav' style={{overflow:'hidden'}}  variant="permanent" open={open}>

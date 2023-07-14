@@ -18,5 +18,12 @@
   .bar p {
     margin-top: 20px;
     font-size: 24px;
+    margin-right: 750px;
+  }
+
+  .bar p1 {
+    margin-top: 20px;
+    font-size: 24px;
+    padding-top: -20px;
   }
   

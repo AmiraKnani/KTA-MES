@@ -299,7 +299,7 @@ function Charte() {
                     <YAxis datakey="taux" tickFormatter={formatter} />
                     <Tooltip content={<CustomTooltip />} />
                     <Legend />
-                    <Bar dataKey="tauxProductivite" fill="#1F69EF" />
+                    <Bar dataKey="tauxProductivite" name="Taux de rendement synthétique" fill="#1F69EF" />
                   </BarChart>
                 </ResponsiveContainer>
               </div>
