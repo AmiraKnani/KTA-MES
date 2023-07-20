@@ -32,6 +32,7 @@ function Charte() {
   const [selectedPeriod, setSelectedPeriod] = useState("");
   const [isFilterCollapsed, setIsFilterCollapsed] = useState(true);
   const [isSearchCollapsed, setIsSearchCollapsed] = useState(true);
+  const [isOpCollapsed, setIsOpCollapsed] = useState(true);
   const toggleFilterContent = () => {
     setIsFilterCollapsed(!isFilterCollapsed);
   };
@@ -49,6 +50,10 @@ function Charte() {
 
   const toggleSearchContent = () => {
     setIsSearchCollapsed(!isSearchCollapsed);
+  };
+
+  const toggleOpContent = () => {
+    setIsOpCollapsed(!isOpCollapsed);
   };
 
   const customStyles = {
@@ -72,41 +77,27 @@ function Charte() {
   const checkboxRefC = useRef()
   const checkboxRefD = useRef()
   const selecRef = useRef()
-//csv data
 
-  const [backendData, setBackenData] = useState([{}])
+
+  const [posts, setPosts] = useState([]);
   useEffect(() => {
-    fetch("/data").then(
-      response => response.json()
-    ).then(
-      data => {
-        setBackenData(data)
-      }
-    )
-  }
-)
-  var m = backendData.data
-
-
-  //mongodb data
-  {/*const [backendData, setBackendData] = useState([]);
-
-  useEffect(() => {
-    fetch('/data')
+    fetch('http://localhost:5000/api/Poste')
       .then(response => response.json())
-      .then(result => {
-        setBackendData(result);
+      .then(data => {
+        const fetchedPosts = data.posts.map((post, index) => {
+          let label = "Poste " + post.poste.substring(1);
+          let obj = {
+            value: post.poste,
+            label: label,
+            taux: post.taux /100
+          }
+          return obj;
+        });
+        setPosts(fetchedPosts);
       })
-      .catch(error => {
-        console.error('Error fetching data:', error);
-      });
+      .catch(error => console.error('Error:', error));
   }, []);
-  var m = backendData.data*/}
 
-  
-
-
-  let posts = []
 
 
   let obj = []
@@ -121,7 +112,7 @@ function Charte() {
     for (let i = 0; i < Object.keys(selectedOption).length; i++) {
       aux = {
         poste: selectedOption[i].value,
-        tauxProductivite: selectedOption[i].taux
+        tauxTRS: selectedOption[i].taux
       }
       temp.push(aux)
     }
@@ -129,46 +120,48 @@ function Charte() {
   }
 
 
-
+  if (posts[0]) {
+    console.log(posts[0].value);
+}
 
 
   const handleChangeGroupe = (event, groupe) => {
-    let aux = []
+    let aux = [] 
     //test if the action was to check or uncheck
     if (event.target.checked) {
       // add the elements with matching Group to the Filtered object
-      let leng = Object.keys(m).length
+      let leng = Object.keys(posts).length
       for (let o = 0; o < leng; o++) {
         switch (groupe) {
           case "A":
-            if (m[o].poste[2] === "0") {
-              const objectExists = filtered.some(item => item.poste === m[o].poste && item.tauxProductivite === m[o].tauxProductivite);
+            if (posts[o] && posts[o].value[1] === "0") {
+              const objectExists = filtered.some(item => item.poste === posts[o].value && item.tauxTRS === posts[o].taux);
               if (!objectExists) {
-                aux.push(m[o])
+                aux.push(posts[o])
               }
             }
             break;
           case "B":
-            if (m[o].poste[2] === "1") {
-              const objectExists = filtered.some(item => item.poste === m[o].poste && item.tauxProductivite === m[o].tauxProductivite);
+            if (posts[o] && posts[o].value[1] === "1") {
+              const objectExists = filtered.some(item => item.poste === posts[o].poste && item.tauxTRS === posts[o].taux);
               if (!objectExists) {
-                aux.push(m[o])
+                aux.push(posts[o])
               }
             }
             break;
           case "C":
-            if (m[o].poste[2] === "2") {
-              const objectExists = filtered.some(item => item.poste === m[o].poste && item.tauxProductivite === m[o].tauxProductivite);
+            if (posts[o] && posts[o].value[1] === "2") {
+              const objectExists = filtered.some(item => item.poste === posts[o].poste && item.tauxTRS === posts[o].taux);
               if (!objectExists) {
-                aux.push(m[o])
+                aux.push(posts[o])
               }
             }
             break;
           default:
-            const objectExists = filtered.some(item => item.poste === m[o].poste && item.tauxProductivite === m[o].tauxProductivite);
+            const objectExists = filtered.some(item => item.poste ===posts[o].poste && item.tauxTRS === posts[o].taux);
             if (!objectExists) {
-              if (m[o].poste[2] === "3") {
-                aux.push(m[o])
+              if (posts[o] && posts[o].value[1] === "3") {
+                aux.push(posts[o])
               }
             }
         }
@@ -183,28 +176,28 @@ function Charte() {
       for (let o = 0; o < leng; o++) {
         switch (groupe) {
           case "A":
-            if (aux[k].poste[2] === "0") {
+            if (aux[k] && aux[k].value[1] === "0") {
               aux.splice(k, 1)
               k--
             }
             k++
             break;
           case "B":
-            if (aux[k].poste[2] === "1") {
+            if (aux[k] && aux[k].value[1] === "1") {
               aux.splice(k, 1)
               k--
             }
             k++
             break;
           case "C":
-            if (aux[k].poste[2] === "2") {
+            if (aux[k] && aux[k].value[1] === "2") {
               aux.splice(k, 1)
               k--
             }
             k++
             break;
           default:
-            if (aux[k].poste[2] === "3") {
+            if (aux[k] && aux[k].value[1] === "3") {
               aux.splice(k, 1)
               k--
             }
@@ -216,15 +209,8 @@ function Charte() {
     }
   };
 
-  for (let j = 0; j < backendData.numPostes; j++) {
-    let label = "Poste " + backendData.data[j].poste.substring(2);
-    obj = {
-      value: backendData.data[j].poste,
-      taux: backendData.data[j].tauxProductivite,
-      label: label
-    }
-    posts.push(obj)
-  }
+
+
 
 
   const [startDate, setStartDate] = useState(new Date());
@@ -238,7 +224,7 @@ function Charte() {
       return (
         <div className="custom-tooltip">
           <p className="Poste"><span style={{ color: 'white' }}>{`Poste:${payload[0].payload.poste}`}</span></p>
-          <p className="Taux"><span style={{ color: 'white' }}>{`Taux: ${(Number(payload[0].payload.tauxProductivite) * 100).toFixed(1)}%`}</span></p>
+          <p className="Taux"><span style={{ color: 'white' }}>{`Taux: ${(Number(payload[0].payload.taux) * 100).toFixed(1)}%`}</span></p>
         </div>
       );
     }
@@ -251,28 +237,8 @@ function Charte() {
 
 
   return (
-    <>  {/*<div className='selectcont'> 
-     <Select
-    className='select'
-    ref={selecRef}
-    closeMenuOnSelect={true}
-    components={{
-      DropdownIndicator: () => (
-        <FontAwesomeIcon className="ddind" icon={faSearch} />
-      ),
-    }}
-    styles={customStyles}
-    placeholder="Search"
-    isMulti
-    options={posts}
-    onChange={handleChangeSelect}
-    /></div>
-    <div className="checkcontainer">
-      <div className="checkboxdiv"><input type='checkbox' ref={checkboxRefA} onChange={event => handleChangeGroupe(event, "A")}/>A(0..99)</div>
-      <div className="checkboxdiv"><input type='checkbox' ref={checkboxRefB} onChange={event => handleChangeGroupe(event, "B")}/>B(100..199)</div>
-      <div className="checkboxdiv"><input type='checkbox' ref={checkboxRefC} onChange={event => handleChangeGroupe(event, "C")}/>C(200..299)</div>
-      <div className="checkboxdiv"><input type='checkbox' ref={checkboxRefD} onChange={event => handleChangeGroupe(event, "D")}/>D(300..399)</div>
-    </div> */}  <br />
+    <> 
+     <br />
 
       <div className="parent-container">
         <div className="collapsible-taux">
@@ -286,7 +252,7 @@ function Charte() {
                   <BarChart
                     width={500}
                     height={300}
-                    data={Object.keys(filtered).length === 0 ? m : filtered}
+                    data={Object.keys(filtered).length === 0 ? posts : filtered}
                     margin={{
                       top: 5,
                       right: 30,
@@ -295,11 +261,11 @@ function Charte() {
                     }}
                   >
                     <CartesianGrid strokeDasharray="3 3" />
-                    <XAxis dataKey="poste" />
-                    <YAxis datakey="taux" tickFormatter={formatter} />
+                    <XAxis dataKey="value" />
+                    <YAxis dataKey="taux" tickFormatter={formatter} />
                     <Tooltip content={<CustomTooltip />} />
                     <Legend />
-                    <Bar dataKey="tauxProductivite" name="Taux de rendement synthétique" fill="#1F69EF" />
+                    <Bar dataKey="taux" name="Taux de rendement synthétique" fill="#1F69EF" />
                   </BarChart>
                 </ResponsiveContainer>
               </div>
@@ -396,7 +362,30 @@ function Charte() {
             </div>
           </div>
           <div className="filter-component">
-            <Operation />
+          <div className="collapsible-box1">
+              <div className="header-chart" onClick={toggleOpContent}>
+                Opération
+                <IconButton onClick={toggleOpContent}>
+                  {isOpCollapsed ? <ExpandMore /> : <ExpandLess />}
+                </IconButton>
+              </div>
+              <div className={`content ${isOpCollapsed ? '' : 'show-content'}`}>
+                <div className='selectcont'>
+                  <Select
+                    className='select'
+                    ref={selecRef}
+                    closeMenuOnSelect={true}
+                    components={{
+                      DropdownIndicator: () => (
+                        <FontAwesomeIcon className="ddind" icon={faSearch} />
+                      ),
+                    }}
+                    styles={customStyles}
+                    placeholder="Search"
+                    isMulti
+                    options={posts}
+                    onChange={handleChangeSelect}
+                  /></div></div></div>
           </div>
         </div>
 

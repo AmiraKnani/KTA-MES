@@ -136,6 +136,8 @@ height: 100%;
   margin-left:28px;
 }
 
+
+
 .left-section,
 .right-section {
   flex: 1;
@@ -233,6 +235,11 @@ font-size:50px;
 .login-form {
   margin-top: 50px;
 }
+
+.registration-form {
+  margin-top: 20px;
+}
+
 .form-group {
   margin-bottom:0 ;
 }
@@ -243,8 +250,8 @@ font-size:50px;
   font-size:15px;
   font-family: "Lato", Arial, sans-serif;
   font-weight: 300;
-  margin-top: 30px;
-  margin-bottom: -15px;
+  margin-top: 20px;
+  margin-bottom: -25px;
 }
 
 .form-group Input {

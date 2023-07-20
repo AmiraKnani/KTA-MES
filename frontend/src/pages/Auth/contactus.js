@@ -5,42 +5,70 @@ import 'react-toastify/dist/ReactToastify.css';
 import KTAimg from '../../images/KTA.png'
 import Input from '@mui/base/Input';
 import TextareaAutosize from '@mui/base/TextareaAutosize';
-import { Link } from 'react-router-dom';
 import Footer from '../../components/Footer'
-
+import axios from 'axios';
+import { Link, useNavigate } from 'react-router-dom';
 
 export const ContactUs = () => {
   const form = useRef();
-  const sendEmail = (e) => {
-    e.preventDefault();
-    emailjs.sendForm('service_9fl84wo', 'template_08zibwc', form.current, 'S6ao3GJZ9msvkAUAO')
-      .then((result) => {
-          toast.success('We will contact you soon !', {
-            position: "top-right",
-            autoClose: 700,
-            hideProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: true,
-            progress: undefined,
-            theme: "light",
-            });
-
-      }, (error) => {
-          console.log(error.text);
-          const err = 'Error, type:\n \ '+error.text
-            toast.error(err, {
-            position: "top-right",
-            autoClose: 700,
-            hideProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: true,
-            progress: undefined,
-            theme: "light",
-            });
-      });
+  const navigate = useNavigate();
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+    
+    var { nom, email, tel, societe, pass  } = document.forms[0];
+  
+    let data = { nom: nom.value, email: email.value, tel:tel.value, codeE:societe.value, mdp: pass.value }; 
+  
+    // Data validation
+    if (nom.value === '') {
+        toast.error('Veuillez fournir un nom.');
+        return;
+    }
+  
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.value)) {
+        toast.error('Veuillez fournir une adresse e-mail valide.');
+        return;
+    }
+  
+    if (pass.value.length < 6) {
+        toast.error('Le mot de passe doit comporter au moins 6 caractères.');
+        return;
+    }
+  
+    try {
+      const response = await axios.post('http://localhost:5000/api/userAdd', data);
+  
+      
+        toast.success('User added successfully', {
+          position: "top-right",
+          autoClose: 700,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "light",
+        })
+        
+  
+  
+    } catch (error) {
+      console.log(error);
+      if(error.response && error.response.status === 400) {
+          toast.error('Registration failed. Try another email.', {
+              position: "top-right",
+              autoClose: 700,
+              hideProgressBar: false,
+              closeOnClick: true,
+              pauseOnHover: true,
+              draggable: true,
+              progress: undefined,
+              theme: "light",
+          });
+      }
+    }
   };
+  
 
   return (
     <>
@@ -50,8 +78,8 @@ export const ContactUs = () => {
             <img src={KTAimg} alt="KTA MES" className="image" />
           </div>
           <div className="child loginform">
-            <center><h1>Contactez-nous</h1></center>
-            <form ref={form} onSubmit={sendEmail} className="login-form">
+            <center><h1>Créer un compte</h1></center>
+            <form ref={form} onSubmit={handleSubmit} className="registration-form">
               <div className="form-group">
                 <div className="rez">
                 <div className='child'>
@@ -71,7 +99,7 @@ export const ContactUs = () => {
                 <Input  name="tel" type="text" align="center" />
                 </div>
                 <div className="child">
-                  <label >Nom de l’entreprise</label>
+                  <label >Code de l’entreprise</label>
                 <Input  name="societe" type="text" align="center" />
                 </div>
                 <div className="form-group">
@@ -80,7 +108,7 @@ export const ContactUs = () => {
                 </div>
                 <Input  name="pass" type="password" align="center" />
               </div>
-                <input id="ddd" type="submit" value="Nous-contactez"/>
+                <input id="ddd" type="submit" value="Inscription"/>
               <div className="cont"><Link to="/">Connecter</Link></div>
 
               </div>
@@ -96,7 +124,6 @@ export const ContactUs = () => {
         </div>
         <div className="right-section">
           <p className="leftp">Créer un compte pour superviser votre entreprise via la station KTA MES 8320</p>
-          <p className="leftp1">Station de pilotage des ressources de l'entreprise à distance et en temps réel</p>
 
         </div>
     </div>

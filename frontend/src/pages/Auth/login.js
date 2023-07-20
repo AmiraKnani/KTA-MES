@@ -48,34 +48,37 @@ function App() {
   const handleSubmit = async (event) => {
     event.preventDefault();
     var { uname, pass } = document.forms[0];
-    let data = { email: uname.value, password: pass.value }
+    let data = { email: uname.value, mdp: pass.value }; 
+  
     try {
-
-      const response = await axios.post('/api/login', data);
-
-      if (response.data.result.login) {
+      const response = await axios.post('http://localhost:5000/api/users', data); 
+  
+      if (response.data.data) { 
+        const user = response.data.data;
+  
         localStorage.setItem('isLoggedin', true);
-        localStorage.setItem('username', response.data.result.username);
-        localStorage.setItem('email', response.data.result.email);
-        localStorage.setItem('pic', response.data.result.pic);
+        localStorage.setItem('username', user.nom);
+        localStorage.setItem('email', user.email);
+        localStorage.setItem('pic', user.pic_path);
         navigate('/dashboard');
-      } else {
-        toast.error(response.data.result.err, {
-          position: "top-right",
-          autoClose: 700,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-          progress: undefined,
-          theme: "light",
-        });
-      }
+      } 
     } catch (error) {
+      // Handle the error here. 
       console.log(error);
-    }
-
-  };
+      if(error.response && error.response.status === 400) {
+          toast.error('Invalid email or password', {
+              position: "top-right",
+              autoClose: 700,
+              hideProgressBar: false,
+              closeOnClick: true,
+              pauseOnHover: true,
+              draggable: true,
+              progress: undefined,
+              theme: "light",
+          });
+      }
+  }
+};
 
   return (
     <>
@@ -106,6 +109,7 @@ function App() {
                 </div>
                 <Input  name="pass" type="password" align="center" />
               </div>
+              <br/>
               <div className="mdp"><Link to="/resetpw">Mot de passe oublié</Link></div>
               <Input id="ddd" type="button" value="Se Connecter" onClick={handleSubmit} />
               <div className="cont"><Link to="/contactus">Créer un compte</Link></div>
