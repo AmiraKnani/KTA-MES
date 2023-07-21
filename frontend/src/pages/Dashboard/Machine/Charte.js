@@ -99,6 +99,96 @@ function Charte() {
   }, []);
 
 
+  const [matinPosts, setMatinPosts] = useState([]);
+  const [shouldDisplayData, setShouldDisplayData] = useState(false);
+
+  useEffect(() => {
+    fetch('http://localhost:5000/api/Matin')
+      .then(response => response.json())
+      .then(data => {
+        const fetchedPosts = data.posts.map((post, index) => {
+          let label = "Poste " + post.poste.substring(1);
+          let obj = {
+            value: post.poste,
+            label: label,
+            taux: post.taux /100
+          }
+          return obj;
+        });
+        setMatinPosts(fetchedPosts);
+      })
+      .catch(error => console.error('Error:', error));
+}, []);
+
+
+const handleButtonClick = () => {
+  setPosts(matinPosts);
+  setShouldDisplayData(true);
+};
+
+const [SoirPosts, setSoirPosts] = useState([]);
+const [shouldDisplayData1, setShouldDisplayData1] = useState(false);
+
+useEffect(() => {
+  fetch('http://localhost:5000/api/Soir')
+    .then(response => response.json())
+    .then(data => {
+      const fetchedPosts = data.posts.map((post, index) => {
+        let label = "Poste " + post.poste.substring(1);
+        let obj = {
+          value: post.poste,
+          label: label,
+          taux: post.taux /100
+        }
+        return obj;
+      });
+      setSoirPosts(fetchedPosts);
+    })
+    .catch(error => console.error('Error:', error));
+}, []);
+
+
+const handleButtonClick1 = () => {
+setPosts(SoirPosts);
+setShouldDisplayData1(true);
+};
+
+
+const [NuitPosts, setNuitPosts] = useState([]);
+const [shouldDisplayData2, setShouldDisplayData2] = useState(false);
+
+useEffect(() => {
+  fetch('http://localhost:5000/api/Nuit')
+    .then(response => response.json())
+    .then(data => {
+      const fetchedPosts = data.posts.map((post, index) => {
+        let label = "Poste " + post.poste.substring(1);
+        let obj = {
+          value: post.poste,
+          label: label,
+          taux: post.taux /100
+        }
+        return obj;
+      });
+      setNuitPosts(fetchedPosts);
+    })
+    .catch(error => console.error('Error:', error));
+}, []);
+
+
+const handleButtonClick2 = () => {
+setPosts(NuitPosts);
+setShouldDisplayData1(true);
+};
+
+
+
+
+
+
+  
+
+
 
   let obj = []
   const handleChangeSelect = selectedOption => {
@@ -299,9 +389,10 @@ function Charte() {
       <DialogContent>
         {selectedPeriod === 'seance' && (
           <>
-            <Button onClick={() => console.log('Matin')}>Matin</Button>
-            <Button onClick={() => console.log('Soir')}>Soir</Button>
-            <Button onClick={() => console.log('Nuit')}>Nuit</Button>
+            <Button onClick={handleButtonClick}>Matin</Button>
+
+            <Button onClick={handleButtonClick1}>Soir</Button>
+            <Button onClick={handleButtonClick2}>Nuit</Button>
           </>
         )}
         {selectedPeriod !== 'seance' && (

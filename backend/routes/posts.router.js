@@ -16,6 +16,10 @@ router.get("/TP", postsController.getAvgTp)
 router.get("/TQ", postsController.getAvgTq)
 router.get("/TRG", postsController.getAvgTrg)
 router.get("/Poste", postsController.getPoste)
+router.get("/Matin", postsController.getMatin)
+router.get("/Soir", postsController.getSoir)
+router.get("/Nuit", postsController.getNuit)
+
 
 router.get("/:Poste", postsController.getById)
 
