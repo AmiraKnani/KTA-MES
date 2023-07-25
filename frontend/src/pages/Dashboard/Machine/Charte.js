@@ -22,30 +22,66 @@ import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import '../../../css/Filtre.css'
 import { registerLocale, setDefaultLocale } from "react-datepicker";
-import fr from 'date-fns/locale/fr'; // or your preferred locale
+import fr from 'date-fns/locale/fr';
+import { format } from 'date-fns';
+import { getWeek } from 'date-fns';
+
+
 registerLocale('fr', fr);
 setDefaultLocale('fr');
 
 
+
 function Charte() {
   const [dialogOpen, setDialogOpen] = useState(false);
+  const [dialogOpen1, setDialogOpen1] = useState(false);
+  const [dialogOpen2, setDialogOpen2] = useState(false);
+  const [dialogOpen3, setDialogOpen3] = useState(false);
   const [selectedPeriod, setSelectedPeriod] = useState("");
   const [isFilterCollapsed, setIsFilterCollapsed] = useState(true);
   const [isSearchCollapsed, setIsSearchCollapsed] = useState(true);
   const [isOpCollapsed, setIsOpCollapsed] = useState(true);
+  const [endDate, setEndDate] = useState(null);
+
+
   const toggleFilterContent = () => {
     setIsFilterCollapsed(!isFilterCollapsed);
   };
 
-  
 
-  const handlePeriodSelection = (period) => {
-    setSelectedPeriod(period);
-    setDialogOpen(true);
+  const handleWeekChange = (weekStart, weekEnd) => {
+    const formattedStart = format(weekStart, 'dd/MM/yyyy');
+    const formattedEnd = format(weekEnd, 'dd/MM/yyyy');
+
+    setStartDate(formattedStart);
+    setEndDate(formattedEnd);
   }
+
+  const handleDateChange = (period) => {
+    // Check if period is a Date object or a string
+    if (period instanceof Date) {
+      setStartDate(period);
+    } else {
+      setSelectedPeriod(period);
+      setDialogOpen(true);
+    }
+
+  };
+
 
   const handleClose = () => {
     setDialogOpen(false);
+  }
+
+  const handleClose1 = () => {
+    setDialogOpen1(false);
+  }
+  const handleClose2 = () => {
+    setDialogOpen2(false);
+  }
+
+  const handleClose3 = () => {
+    setDialogOpen3(false);
   }
 
   const toggleSearchContent = () => {
@@ -89,7 +125,7 @@ function Charte() {
           let obj = {
             value: post.poste,
             label: label,
-            taux: post.taux /100
+            taux: post.taux / 100
           }
           return obj;
         });
@@ -111,82 +147,115 @@ function Charte() {
           let obj = {
             value: post.poste,
             label: label,
-            taux: post.taux /100
+            taux: post.taux / 100
           }
           return obj;
         });
         setMatinPosts(fetchedPosts);
       })
       .catch(error => console.error('Error:', error));
-}, []);
+  }, []);
 
 
-const handleButtonClick = () => {
-  setPosts(matinPosts);
-  setShouldDisplayData(true);
-};
+  const handleButtonClick = () => {
+    setPosts(matinPosts);
+    setShouldDisplayData(true);
+  };
 
-const [SoirPosts, setSoirPosts] = useState([]);
-const [shouldDisplayData1, setShouldDisplayData1] = useState(false);
+  const [SoirPosts, setSoirPosts] = useState([]);
+  const [shouldDisplayData1, setShouldDisplayData1] = useState(false);
 
-useEffect(() => {
-  fetch('http://localhost:5000/api/Soir')
-    .then(response => response.json())
-    .then(data => {
-      const fetchedPosts = data.posts.map((post, index) => {
-        let label = "Poste " + post.poste.substring(1);
-        let obj = {
-          value: post.poste,
-          label: label,
-          taux: post.taux /100
-        }
-        return obj;
-      });
-      setSoirPosts(fetchedPosts);
-    })
-    .catch(error => console.error('Error:', error));
-}, []);
-
-
-const handleButtonClick1 = () => {
-setPosts(SoirPosts);
-setShouldDisplayData1(true);
-};
+  useEffect(() => {
+    fetch('http://localhost:5000/api/Soir')
+      .then(response => response.json())
+      .then(data => {
+        const fetchedPosts = data.posts.map((post, index) => {
+          let label = "Poste " + post.poste.substring(1);
+          let obj = {
+            value: post.poste,
+            label: label,
+            taux: post.taux / 100
+          }
+          return obj;
+        });
+        setSoirPosts(fetchedPosts);
+      })
+      .catch(error => console.error('Error:', error));
+  }, []);
 
 
-const [NuitPosts, setNuitPosts] = useState([]);
-const [shouldDisplayData2, setShouldDisplayData2] = useState(false);
-
-useEffect(() => {
-  fetch('http://localhost:5000/api/Nuit')
-    .then(response => response.json())
-    .then(data => {
-      const fetchedPosts = data.posts.map((post, index) => {
-        let label = "Poste " + post.poste.substring(1);
-        let obj = {
-          value: post.poste,
-          label: label,
-          taux: post.taux /100
-        }
-        return obj;
-      });
-      setNuitPosts(fetchedPosts);
-    })
-    .catch(error => console.error('Error:', error));
-}, []);
+  const handleButtonClick1 = () => {
+    setPosts(SoirPosts);
+    setShouldDisplayData1(true);
+  };
 
 
-const handleButtonClick2 = () => {
-setPosts(NuitPosts);
-setShouldDisplayData1(true);
-};
+  const [NuitPosts, setNuitPosts] = useState([]);
+  const [shouldDisplayData2, setShouldDisplayData2] = useState(false);
+
+  useEffect(() => {
+    fetch('http://localhost:5000/api/Nuit')
+      .then(response => response.json())
+      .then(data => {
+        const fetchedPosts = data.posts.map((post, index) => {
+          let label = "Poste " + post.poste.substring(1);
+          let obj = {
+            value: post.poste,
+            label: label,
+            taux: post.taux / 100
+          }
+          return obj;
+        });
+        setNuitPosts(fetchedPosts);
+      })
+      .catch(error => console.error('Error:', error));
+  }, []);
+
+
+  const handleButtonClick2 = () => {
+    setPosts(NuitPosts);
+    setShouldDisplayData1(true);
+  };
+
+  const [JourPosts, setJourPosts] = useState([]);
+  const [shouldDisplayData3, setShouldDisplayData3] = useState(false);
+  const [startDate, setStartDate] = useState(new Date());
+  const formattedDate = format(startDate, 'dd/MM/yyyy');
+
+  useEffect(() => {
+    // Appending formattedDate to the fetch URL
+    fetch(`http://localhost:5000/api/Jour?date=${formattedDate}`)
+      .then(response => response.json())
+      .then(data => {
+        const fetchedPosts = data.posts.map((post, index) => {
+          let label = "Poste " + post.poste.substring(1);
+          let obj = {
+            value: post.poste,
+            label: label,
+            taux: post.taux / 100
+          }
+          return obj;
+        });
+        setJourPosts(fetchedPosts);
+        console.log(fetchedPosts)
+      })
+      .catch(error => console.error('Error:', error));
+  }, [startDate]);  // adding startDate as a dependency
+
+
+
+  const handleButtonClick3 = () => {
+    setPosts(JourPosts);
+    setShouldDisplayData3(true);
+  };
 
 
 
 
 
 
-  
+
+
 
 
 
@@ -202,7 +271,7 @@ setShouldDisplayData1(true);
     for (let i = 0; i < Object.keys(selectedOption).length; i++) {
       aux = {
         poste: selectedOption[i].value,
-        tauxTRS: selectedOption[i].taux
+        taux: selectedOption[i].taux
       }
       temp.push(aux)
     }
@@ -212,11 +281,11 @@ setShouldDisplayData1(true);
 
   if (posts[0]) {
     console.log(posts[0].value);
-}
+  }
 
 
   const handleChangeGroupe = (event, groupe) => {
-    let aux = [] 
+    let aux = []
     //test if the action was to check or uncheck
     if (event.target.checked) {
       // add the elements with matching Group to the Filtered object
@@ -248,7 +317,7 @@ setShouldDisplayData1(true);
             }
             break;
           default:
-            const objectExists = filtered.some(item => item.poste ===posts[o].poste && item.tauxTRS === posts[o].taux);
+            const objectExists = filtered.some(item => item.poste === posts[o].poste && item.tauxTRS === posts[o].taux);
             if (!objectExists) {
               if (posts[o] && posts[o].value[1] === "3") {
                 aux.push(posts[o])
@@ -301,14 +370,29 @@ setShouldDisplayData1(true);
 
 
 
+  const handleDialogOpen1 = (period) => {
+    setSelectedPeriod(period);
+    setDialogOpen1(true);
+  }
+
+  const handleDialogOpen2 = (period) => {
+    setSelectedPeriod(period);
+    setDialogOpen2(true);
+  }
+  const handleDialogOpen3 = (period) => {
+    setSelectedPeriod(period);
+    setDialogOpen3(true);
+  }
 
 
-  const [startDate, setStartDate] = useState(new Date());
+
   const [isOpen, setIsOpen] = useState(true);
-  
+
 
 
   const formatter = (value) => `${value * 100}%`;
+
+  console.log(formattedDate);
   const CustomTooltip = ({ active, payload, label }) => {
     if (active && payload && payload.length) {
       return (
@@ -318,17 +402,17 @@ setShouldDisplayData1(true);
         </div>
       );
     }
-    
 
-    
+
+
     return null;
   };
 
 
 
   return (
-    <> 
-     <br />
+    <>
+      <br />
 
       <div className="parent-container">
         <div className="collapsible-taux">
@@ -352,7 +436,7 @@ setShouldDisplayData1(true);
                   >
                     <CartesianGrid strokeDasharray="3 3" />
                     <XAxis dataKey="value" />
-                    <YAxis dataKey="taux" tickFormatter={formatter} />
+                    <YAxis dataKey="taux" tickFormatter={formatter} domain={[0.805, 0.815]} />
                     <Tooltip content={<CustomTooltip />} />
                     <Legend />
                     <Bar dataKey="taux" name="Taux de rendement synthétique" fill="#1F69EF" />
@@ -375,44 +459,75 @@ setShouldDisplayData1(true);
             </div>
             <div className={`content ${isFilterCollapsed ? '' : 'show-content'}`}>
               <div className="column">
-                
+
                 <div className="parent1">
-      <div className="choice" onClick={() => handlePeriodSelection('seance')}>Séance</div>
-      <div className="choice" onClick={() => handlePeriodSelection('day')}>Jour</div>
-      <div className="choice" onClick={() => handlePeriodSelection('week')}>Semaine</div>
-      <div className="choice" onClick={() => handlePeriodSelection('month')}>Mois</div>
-      <div className="choice" onClick={() => handlePeriodSelection('quarter')}>Trimestre</div>
-    </div>
 
-    <Dialog onClose={handleClose} open={dialogOpen} PaperProps={{style: {width: '22%', height: '60%'}}}>
-      <DialogTitle>Choisissez une période</DialogTitle>
-      <DialogContent>
-        {selectedPeriod === 'seance' && (
-          <>
-            <Button onClick={handleButtonClick}>Matin</Button>
+                  <div className="choice" onClick={() => handleDialogOpen1('seance')}>Séance</div>
+                  <div className="choice" onClick={() => handleDialogOpen2('day')}>Jour</div>
+                  <div className="choice" onClick={() => handleDialogOpen3('week')}>Semaine</div>
+                  <div className="choice" onClick={() => handleDialogOpen2('month')}>Mois</div>
+                  <div className="choice" onClick={() => handleDialogOpen2('quarter')}>Trimestre</div>
 
-            <Button onClick={handleButtonClick1}>Soir</Button>
-            <Button onClick={handleButtonClick2}>Nuit</Button>
-          </>
-        )}
-        {selectedPeriod !== 'seance' && (
-          <DatePicker
-          selected={startDate}
-          onChange={(date) => setStartDate(date)}
-          open={isOpen}
-          onInputClick={() => setIsOpen(!isOpen)}
-          calendarClassName="custom-datepicker"
-          dateFormat={selectedPeriod === 'month' ? 'MM/yyyy' : 'MM/dd/yyyy'}
-          showMonthYearPicker={selectedPeriod === 'month'}
-          showWeekNumbers={selectedPeriod === 'week'}
-          monthsShown={selectedPeriod === 'quarter' ? 3 : 1}
-        />
-        )}
-      </DialogContent>
-      <DialogActions>
-        <Button onClick={handleClose}>Close</Button>
-      </DialogActions>
-    </Dialog>
+
+                </div>
+
+                <Dialog onClose={handleClose1} open={dialogOpen1} PaperProps={{ style: { width: '18%', height: '23%' } }}>
+                  <DialogTitle>Choisissez une séance</DialogTitle>
+                  <DialogContent>
+                    {selectedPeriod === 'seance' && (
+                      <>
+                        <Button onClick={handleButtonClick}>Matin</Button>
+                        <Button onClick={handleButtonClick1}>Soir</Button>
+                        <Button onClick={handleButtonClick2}>Nuit</Button>
+                      </>
+                    )}
+                  </DialogContent>
+                  <DialogActions>
+                    <Button onClick={handleClose1}>Close</Button>
+                  </DialogActions>
+                </Dialog>
+
+                <Dialog onClose={handleClose2} open={dialogOpen2} PaperProps={{ style: { width: '22%', height: '55%' } }}>
+                  <DialogTitle>Choisissez un jour</DialogTitle>
+                  <DialogContent>
+                    {selectedPeriod !== 'seance' && (
+                      <DatePicker
+                        selected={startDate}
+                        onChange={(date) => { handleButtonClick3(); handleDateChange(date); }}
+                        open={isOpen}
+                        onInputClick={() => setIsOpen(!isOpen)}
+                        calendarClassName="custom-datepicker"
+                        dateFormat="dd/MM/yyyy"
+                      />
+                    )}
+                  </DialogContent>
+                  <DialogActions>
+                    <Button onClick={handleClose2}>Close</Button>
+                  </DialogActions>
+                </Dialog>
+
+                <Dialog onClose={handleClose3} open={dialogOpen3} PaperProps={{ style: { width: '22%', height: '55%' } }}>
+                  <DialogTitle>Choisissez une semaine</DialogTitle>
+                  <DialogContent>
+                    {selectedPeriod !== 'seance' && selectedPeriod !== 'day' && (
+                      <DatePicker
+                      selected={startDate}
+                      onChange={(date) => { handleButtonClick3(); handleDateChange(date); }}
+                        open={isOpen}
+                        onInputClick={() => setIsOpen(!isOpen)}
+                        calendarClassName="custom-datepicker"
+                        dateFormat="dd/MM/yyyy"
+                        showMonthYearPicker={selectedPeriod === 'month'}
+                        showWeekNumbers={selectedPeriod === 'week'}
+                        monthsShown={selectedPeriod === 'quarter' ? 3 : 1}
+                      />
+                    )}
+                  </DialogContent>
+                  <DialogActions>
+                    <Button onClick={handleClose3}>Close</Button>
+                  </DialogActions>
+                </Dialog>
+
 
               </div>
 
@@ -453,7 +568,7 @@ setShouldDisplayData1(true);
             </div>
           </div>
           <div className="filter-component">
-          <div className="collapsible-box1">
+            <div className="collapsible-box1">
               <div className="header-chart" onClick={toggleOpContent}>
                 Opération
                 <IconButton onClick={toggleOpContent}>

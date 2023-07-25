@@ -189,7 +189,7 @@ const postsController = {
     //Get Nuit
     getNuit: async (req, res) => {
         try {
-            const [rows, fields] = await pool.query("SELECT Poste, AVG(TRE) as avgTRS FROM TRS WHERE `Type périodicité` = 'Seance' AND `Nom périodicité` = 'Nuit' GROUP BY Poste;")
+            const [rows, fields] = await pool.query("SELECT Poste, AVG(TRS) as avgTRS FROM TRS WHERE `Type périodicité` = 'Seance' AND `Nom périodicité` = 'Nuit' GROUP BY Poste;")
             const posts = rows.map(row => ({ poste: row.Poste, taux: row.avgTRS }));
             res.json({ posts });
 
@@ -198,6 +198,18 @@ const postsController = {
         }
     },
 
+    //Get Jour
+    getJour: async (req, res) => {
+        try {
+            const { date } = req.query;
+            const [rows, fields] = await pool.query("SELECT Poste, AVG(TRS) as avgTRS FROM TRS  WHERE `Date initiale` = ? and `Type périodicité`='Jour' GROUP BY Poste", [date])
+            const posts = rows.map(row => ({ poste: row.Poste, taux: row.avgTRS }));
+            res.json({ posts });
+
+        } catch (error) {
+            console.log(error)
+        }
+    },
 
 
 

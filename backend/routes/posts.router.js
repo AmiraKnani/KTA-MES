@@ -19,6 +19,7 @@ router.get("/Poste", postsController.getPoste)
 router.get("/Matin", postsController.getMatin)
 router.get("/Soir", postsController.getSoir)
 router.get("/Nuit", postsController.getNuit)
+router.get("/Jour", postsController.getJour)
 
 
 router.get("/:Poste", postsController.getById)
