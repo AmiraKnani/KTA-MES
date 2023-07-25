@@ -37,6 +37,7 @@ function Charte() {
   const [dialogOpen1, setDialogOpen1] = useState(false);
   const [dialogOpen2, setDialogOpen2] = useState(false);
   const [dialogOpen3, setDialogOpen3] = useState(false);
+  const [dialogOpen4, setDialogOpen4] = useState(false);
   const [selectedPeriod, setSelectedPeriod] = useState("");
   const [isFilterCollapsed, setIsFilterCollapsed] = useState(true);
   const [isSearchCollapsed, setIsSearchCollapsed] = useState(true);
@@ -82,6 +83,10 @@ function Charte() {
 
   const handleClose3 = () => {
     setDialogOpen3(false);
+  }
+
+  const handleClose4 = () => {
+    setDialogOpen4(false);
   }
 
   const toggleSearchContent = () => {
@@ -221,6 +226,8 @@ function Charte() {
   const [shouldDisplayData3, setShouldDisplayData3] = useState(false);
   const [startDate, setStartDate] = useState(new Date());
   const formattedDate = format(startDate, 'dd/MM/yyyy');
+  const formattedDate1 = format(startDate, 'M');
+  const formattedDate2 = format(startDate, 'yyyy');
 
   useEffect(() => {
     // Appending formattedDate to the fetch URL
@@ -247,6 +254,38 @@ function Charte() {
   const handleButtonClick3 = () => {
     setPosts(JourPosts);
     setShouldDisplayData3(true);
+  };
+
+  const [MoisPosts, setMoisPosts] = useState([]);
+  const [shouldDisplayData4, setShouldDisplayData4] = useState(false);
+
+  useEffect(() => {
+    // Appending formattedDate to the fetch URL
+    fetch(`http://localhost:5000/api/Mois?date=${formattedDate1}&annee=${formattedDate2}`)
+      .then(response => response.json())
+      .then(data => {
+        const fetchedPosts = data.posts.map((post, index) => {
+          let label = "Poste " + post.poste.substring(1);
+          let obj = {
+            value: post.poste,
+            label: label,
+            taux: post.taux / 100
+          }
+          return obj;
+        });
+        setMoisPosts(fetchedPosts);
+        console.log(fetchedPosts)
+      })
+      .catch(error => console.error('Error:', error));
+  }, [startDate]);
+
+
+
+
+
+  const handleButtonClick4 = () => {
+    setPosts(MoisPosts);
+    setShouldDisplayData4(true);
   };
 
 
@@ -384,6 +423,11 @@ function Charte() {
     setDialogOpen3(true);
   }
 
+  const handleDialogOpen4 = (period) => {
+    setSelectedPeriod(period);
+    setDialogOpen4(true);
+  }
+
 
 
   const [isOpen, setIsOpen] = useState(true);
@@ -407,6 +451,7 @@ function Charte() {
 
     return null;
   };
+
 
 
 
@@ -465,7 +510,7 @@ function Charte() {
                   <div className="choice" onClick={() => handleDialogOpen1('seance')}>Séance</div>
                   <div className="choice" onClick={() => handleDialogOpen2('day')}>Jour</div>
                   <div className="choice" onClick={() => handleDialogOpen3('week')}>Semaine</div>
-                  <div className="choice" onClick={() => handleDialogOpen2('month')}>Mois</div>
+                  <div className="choice" onClick={() => handleDialogOpen4('month')}>Mois</div>
                   <div className="choice" onClick={() => handleDialogOpen2('quarter')}>Trimestre</div>
 
 
@@ -490,7 +535,7 @@ function Charte() {
                 <Dialog onClose={handleClose2} open={dialogOpen2} PaperProps={{ style: { width: '22%', height: '55%' } }}>
                   <DialogTitle>Choisissez un jour</DialogTitle>
                   <DialogContent>
-                    {selectedPeriod !== 'seance' && (
+                    {selectedPeriod === 'day' && (
                       <DatePicker
                         selected={startDate}
                         onChange={(date) => { handleButtonClick3(); handleDateChange(date); }}
@@ -509,17 +554,15 @@ function Charte() {
                 <Dialog onClose={handleClose3} open={dialogOpen3} PaperProps={{ style: { width: '22%', height: '55%' } }}>
                   <DialogTitle>Choisissez une semaine</DialogTitle>
                   <DialogContent>
-                    {selectedPeriod !== 'seance' && selectedPeriod !== 'day' && (
+                    {selectedPeriod === 'week' && (
                       <DatePicker
-                      selected={startDate}
-                      onChange={(date) => { handleButtonClick3(); handleDateChange(date); }}
+                        selected={startDate}
+                        onChange={(date) => { handleButtonClick3(); handleDateChange(date); }}
                         open={isOpen}
                         onInputClick={() => setIsOpen(!isOpen)}
                         calendarClassName="custom-datepicker"
                         dateFormat="dd/MM/yyyy"
-                        showMonthYearPicker={selectedPeriod === 'month'}
                         showWeekNumbers={selectedPeriod === 'week'}
-                        monthsShown={selectedPeriod === 'quarter' ? 3 : 1}
                       />
                     )}
                   </DialogContent>
@@ -527,6 +570,29 @@ function Charte() {
                     <Button onClick={handleClose3}>Close</Button>
                   </DialogActions>
                 </Dialog>
+
+                <Dialog onClose={handleClose4} open={dialogOpen4} PaperProps={{ style: { width: '20%', height: '44%' } }}>
+                  <DialogTitle>Choisissez un mois</DialogTitle>
+                  <DialogContent>
+                    {selectedPeriod === 'month' && (
+                      <DatePicker
+                        selected={startDate}
+                        onChange={(date) => { handleButtonClick4(); handleDateChange(date); }}
+                        open={isOpen}
+                        onInputClick={() => setIsOpen(!isOpen)}
+                        calendarClassName="custom-datepicker"
+                        dateFormat="MM/yyyy"
+                        showMonthYearPicker={selectedPeriod === 'month'}
+
+                      />
+                    )}
+                  </DialogContent>
+                  <DialogActions>
+                    <Button onClick={handleClose4}>Close</Button>
+                  </DialogActions>
+                </Dialog>
+
+
 
 
               </div>

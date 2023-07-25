@@ -212,6 +212,75 @@ const postsController = {
     },
 
 
+    //Get Mois
+    getMois: async (req, res) => {
+        try {
+            const { date, annee } = req.query;
+            const [rows, fields] = await pool.query("SELECT Poste, AVG(TRS) as avgTRS FROM TRS  WHERE `Nom périodicité` = ? and Année = ? and `Type périodicité`='Mois' GROUP BY Poste", [date, annee])
+            const posts = rows.map(row => ({ poste: row.Poste, taux: row.avgTRS }));
+            res.json({ posts });
+
+        } catch (error) {
+            console.log(error)
+        }
+    },
+
+    //Get TP
+    getTp: async (req, res) => {
+        try {
+            const { id } = req.query;
+            const [rows, fields] = await pool.query("select `Taux Performance` from TRS where `Poste`=? order by `Date initiale` ", [id])
+            res.json({
+                data: rows
+            })
+
+        } catch (error) {
+            console.log(error)
+        }
+    },
+
+    //Get TQ
+    getTq: async (req, res) => {
+        try {
+            const { id } = req.query;
+            const [rows, fields] = await pool.query("select `Taux Qualité` from TRS where `Poste`=? order by `Date initiale` ", [id])
+            res.json({
+                data: rows
+            })
+
+        } catch (error) {
+            console.log(error)
+        }
+    },
+
+    //Get TRG
+    getTrg: async (req, res) => {
+        try {
+            const { id } = req.query;
+            const [rows, fields] = await pool.query("select TRG from TRS where `Poste`=? order by `Date initiale` ", [id])
+            res.json({
+                data: rows
+            })
+
+        } catch (error) {
+            console.log(error)
+        }
+    },
+
+    //Get TRE
+    getTre: async (req, res) => {
+        try {
+            const { id } = req.query;
+            const [rows, fields] = await pool.query("select TRE from TRS where `Poste`=? order by `Date initiale` ", [id])
+            const posts = rows.map(row => ({ poste: row.Poste, taux: row.avgTRS }));
+            res.json({
+                data: rows
+            })
+
+        } catch (error) {
+            console.log(error)
+        }
+    },
 
     getById: async (req, res) => {
         try {
@@ -224,6 +293,7 @@ const postsController = {
             console.log(error)
         }
     },
+
     create: async (req, res) => {
         try {
             const { Poste, Typepériodicité, Dateinitiale, Nomjourinitiale, Nompériodicité, Année, TauxDisponibilitéOpérationnelle, TauxPerformance, TauxQualité, TRS, TRG, TRE, TempsPériodicité, TempsOverture, TempsFermeture, TempsArrêtsPlanifiés, TempsArrêtsNonPlanifiés, TempsEcartCadence, TempsNonQualité, TempsRequis, TempsdeFonctionnement, TempsNet, TempsUtile } = req.body
