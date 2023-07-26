@@ -38,11 +38,30 @@ function Charte() {
   const [dialogOpen2, setDialogOpen2] = useState(false);
   const [dialogOpen3, setDialogOpen3] = useState(false);
   const [dialogOpen4, setDialogOpen4] = useState(false);
+  const [dialogOpen5, setDialogOpen5] = useState(false);
   const [selectedPeriod, setSelectedPeriod] = useState("");
   const [isFilterCollapsed, setIsFilterCollapsed] = useState(true);
   const [isSearchCollapsed, setIsSearchCollapsed] = useState(true);
   const [isOpCollapsed, setIsOpCollapsed] = useState(true);
   const [endDate, setEndDate] = useState(null);
+
+  // inside your component
+  const [selectedPeriod1, setSelectedPeriod1] = useState('quarter');
+  const [year, setYear] = useState(2023);
+  const [yearError, setYearError] = useState('');
+
+  // Handler for year input
+  const handleYearChange = (event) => {
+    const newYear = event.target.value;
+
+    // Check if the input is a valid year
+    if (newYear >= 1900 && newYear <= new Date().getFullYear()) {
+      setYearError('');  // Clear any previous error
+      setYear(newYear);
+    } else {
+      setYearError('Please enter a valid year');
+    }
+  }
 
 
   const toggleFilterContent = () => {
@@ -87,6 +106,10 @@ function Charte() {
 
   const handleClose4 = () => {
     setDialogOpen4(false);
+  }
+
+  const handleClose5 = () => {
+    setDialogOpen5(false);
   }
 
   const toggleSearchContent = () => {
@@ -288,6 +311,123 @@ function Charte() {
     setShouldDisplayData4(true);
   };
 
+  const [Tri1Posts, setTri1Posts] = useState([]);
+  const [shouldDisplayData5, setShouldDisplayData5] = useState(false);
+
+  useEffect(() => {
+    // Appending formattedDate to the fetch URL
+    fetch(`http://localhost:5000/api/getTrimestre1?annee=${year}`)
+      .then(response => response.json())
+      .then(data => {
+        const fetchedPosts = data.posts.map((post, index) => {
+          let label = "Poste " + post.poste.substring(1);
+          let obj = {
+            value: post.poste,
+            label: label,
+            taux: post.taux / 100
+          }
+          return obj;
+        });
+        setTri1Posts(fetchedPosts);
+        console.log(fetchedPosts)
+      })
+      .catch(error => console.error('Error:', error));
+  }, [year]);
+
+
+  const handleButtonClick5 = () => {
+    setPosts(Tri1Posts);
+    setShouldDisplayData5(true);
+  };
+
+  const [Tri2Posts, setTri2Posts] = useState([]);
+  const [shouldDisplayData6, setShouldDisplayData6] = useState(false);
+
+  useEffect(() => {
+    // Appending formattedDate to the fetch URL
+    fetch(`http://localhost:5000/api/getTrimestre2?annee=${year}`)
+      .then(response => response.json())
+      .then(data => {
+        const fetchedPosts = data.posts.map((post, index) => {
+          let label = "Poste " + post.poste.substring(1);
+          let obj = {
+            value: post.poste,
+            label: label,
+            taux: post.taux / 100
+          }
+          return obj;
+        });
+        setTri2Posts(fetchedPosts);
+        console.log(fetchedPosts)
+      })
+      .catch(error => console.error('Error:', error));
+  }, [year]);
+
+
+  const handleButtonClick6 = () => {
+    setPosts(Tri2Posts);
+    setShouldDisplayData6(true);
+  };
+
+  const [Tri3Posts, setTri3Posts] = useState([]);
+  const [shouldDisplayData7, setShouldDisplayData7] = useState(false);
+
+  useEffect(() => {
+    // Appending formattedDate to the fetch URL
+    fetch(`http://localhost:5000/api/getTrimestre3?annee=${year}`)
+      .then(response => response.json())
+      .then(data => {
+        const fetchedPosts = data.posts.map((post, index) => {
+          let label = "Poste " + post.poste.substring(1);
+          let obj = {
+            value: post.poste,
+            label: label,
+            taux: post.taux / 100
+          }
+          return obj;
+        });
+        setTri3Posts(fetchedPosts);
+        console.log(fetchedPosts)
+      })
+      .catch(error => console.error('Error:', error));
+  }, [year]);
+
+
+  const handleButtonClick7 = () => {
+    setPosts(Tri3Posts);
+    setShouldDisplayData7(true);
+  };
+
+  const [Tri4Posts, setTri4Posts] = useState([]);
+  const [shouldDisplayData8, setShouldDisplayData8] = useState(false);
+
+  useEffect(() => {
+    // Appending formattedDate to the fetch URL
+    fetch(`http://localhost:5000/api/getTrimestre4?annee=${year}`)
+      .then(response => response.json())
+      .then(data => {
+        const fetchedPosts = data.posts.map((post, index) => {
+          let label = "Poste " + post.poste.substring(1);
+          let obj = {
+            value: post.poste,
+            label: label,
+            taux: post.taux / 100
+          }
+          return obj;
+        });
+        setTri4Posts(fetchedPosts);
+        console.log(fetchedPosts)
+      })
+      .catch(error => console.error('Error:', error));
+  }, [year]);
+
+
+  const handleButtonClick8 = () => {
+    setPosts(Tri4Posts);
+    setShouldDisplayData8(true);
+  };
+
+
 
 
 
@@ -427,6 +567,10 @@ function Charte() {
     setSelectedPeriod(period);
     setDialogOpen4(true);
   }
+  const handleDialogOpen5 = (period) => {
+    setSelectedPeriod(period);
+    setDialogOpen5(true);
+  }
 
 
 
@@ -441,7 +585,7 @@ function Charte() {
     if (active && payload && payload.length) {
       return (
         <div className="custom-tooltip">
-          <p className="Poste"><span style={{ color: 'white' }}>{`Poste:${payload[0].payload.poste}`}</span></p>
+          <p className="Poste"><span style={{ color: 'white' }}>{`Poste: ${payload[0].payload.value}`}</span></p>
           <p className="Taux"><span style={{ color: 'white' }}>{`Taux: ${(Number(payload[0].payload.taux) * 100).toFixed(1)}%`}</span></p>
         </div>
       );
@@ -511,7 +655,7 @@ function Charte() {
                   <div className="choice" onClick={() => handleDialogOpen2('day')}>Jour</div>
                   <div className="choice" onClick={() => handleDialogOpen3('week')}>Semaine</div>
                   <div className="choice" onClick={() => handleDialogOpen4('month')}>Mois</div>
-                  <div className="choice" onClick={() => handleDialogOpen2('quarter')}>Trimestre</div>
+                  <div className="choice" onClick={() => handleDialogOpen5('quarter')}>Trimestre</div>
 
 
                 </div>
@@ -589,6 +733,32 @@ function Charte() {
                   </DialogContent>
                   <DialogActions>
                     <Button onClick={handleClose4}>Close</Button>
+                  </DialogActions>
+                </Dialog>
+                <Dialog onClose={handleClose5} open={dialogOpen5} PaperProps={{ style: { width: '18%', height: '47%' } }}>
+                  <DialogTitle>Choisissez un trimestre</DialogTitle>
+                  <DialogContent>
+                    {selectedPeriod === 'quarter' && (
+                      <>
+                        <Button onClick={handleButtonClick5}>Janvier-Mars</Button>
+                        <br />
+                        <Button onClick={handleButtonClick6}>Avril-Juin</Button>
+                        <Button onClick={handleButtonClick7}>Juillet-Septembre</Button>
+                        <Button onClick={handleButtonClick8}>Octobre-Decembre</Button>
+                        <div style={{ marginTop: '20px' }}>
+                        <input
+                          type="number"
+                          value={year}
+                          onChange={handleYearChange}
+                          placeholder="Enter a year"
+                        />
+                        {yearError && <p>{yearError}</p>}
+                        </div>
+                      </>
+                    )}
+                  </DialogContent>
+                  <DialogActions>
+                    <Button onClick={handleClose5}>Close</Button>
                   </DialogActions>
                 </Dialog>
 

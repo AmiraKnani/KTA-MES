@@ -25,6 +25,10 @@ router.get("/getTp", postsController.getTp)
 router.get("/getTq", postsController.getTq)
 router.get("/getTrg", postsController.getTrg)
 router.get("/getTre", postsController.getTre)
+router.get("/getTrimestre1", postsController.getTrimestre1)
+router.get("/getTrimestre2", postsController.getTrimestre2)
+router.get("/getTrimestre3", postsController.getTrimestre3)
+router.get("/getTrimestre4", postsController.getTrimestre4)
 
 
 

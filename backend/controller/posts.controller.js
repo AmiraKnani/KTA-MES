@@ -282,6 +282,58 @@ const postsController = {
         }
     },
 
+    //Get Trimestre1
+    getTrimestre1: async (req, res) => {
+        try {
+            const { annee } = req.query;
+            const [rows, fields] = await pool.query("SELECT Poste, AVG(TRS) as avgTRS FROM TRS WHERE `Nom périodicité`= '1' and Année = ? and `Type périodicité`='Trimestre' GROUP BY Poste; ", [annee])
+            const posts = rows.map(row => ({ poste: row.Poste, taux: row.avgTRS }));
+            res.json({ posts });
+
+        } catch (error) {
+            console.log(error)
+        }
+    },
+
+    //Get Trimestre2
+    getTrimestre2: async (req, res) => {
+        try {
+            const { annee } = req.query;
+            const [rows, fields] = await pool.query("SELECT Poste, AVG(TRS) as avgTRS FROM TRS WHERE `Nom périodicité`= '2' and Année = ? and `Type périodicité`='Trimestre' GROUP BY Poste; ", [annee])
+            const posts = rows.map(row => ({ poste: row.Poste, taux: row.avgTRS }));
+            res.json({ posts });
+
+        } catch (error) {
+            console.log(error)
+        }
+    },
+
+    //Get Trimestre3
+    getTrimestre3: async (req, res) => {
+        try {
+            const { annee } = req.query;
+            const [rows, fields] = await pool.query("SELECT Poste, AVG(TRS) as avgTRS FROM TRS WHERE `Nom périodicité`= '3' and Année = ? and `Type périodicité`='Trimestre' GROUP BY Poste; ", [annee])
+            const posts = rows.map(row => ({ poste: row.Poste, taux: row.avgTRS }));
+            res.json({ posts });
+
+        } catch (error) {
+            console.log(error)
+        }
+    },
+
+    //Get Trimestre4
+    getTrimestre4: async (req, res) => {
+        try {
+            const { annee } = req.query;
+            const [rows, fields] = await pool.query("SELECT Poste, AVG(TRS) as avgTRS FROM TRS WHERE `Nom périodicité`= '4' and Année = ? and `Type périodicité`='Trimestre' GROUP BY Poste; ", [annee])
+            const posts = rows.map(row => ({ poste: row.Poste, taux: row.avgTRS }));
+            res.json({ posts });
+
+        } catch (error) {
+            console.log(error)
+        }
+    },
+
     getById: async (req, res) => {
         try {
             const { Poste } = req.params
