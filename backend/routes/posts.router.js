@@ -6,7 +6,8 @@ const postsController = require("../controller/posts.controller")
 //Users
 router.post("/users", postsController.getAllU)
 router.post("/userAdd", postsController.createU)
-router.put("/:email", postsController.updateU)
+router.put("/update", postsController.updateU)
+router.get("/checkU", postsController.checkU)
 
 //TRS
 router.get("/count", postsController.getCount)

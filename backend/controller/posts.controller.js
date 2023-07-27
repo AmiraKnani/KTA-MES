@@ -56,15 +56,14 @@ const postsController = {
     //edit password 
     updateU: async (req, res) => {
         try {
-            const { email } = req.params;
-            const { mdp } = req.body;
+            const { email, mdp } = req.body;
             const sql = "UPDATE users SET mdp = ? WHERE email = ?";
-            const [result] = await pool.query(sql, [mdp, email]);
-
+            const [result] = await pool.query(sql, [mdp, email]); // Here, the first parameter in the array should be 'mdp', not 'email'.
+    
             if (result.affectedRows === 0) {
                 return res.status(404).json({ error: "User not found" });
             }
-
+    
             res.json({
                 status: "success",
                 message: "User updated successfully",
@@ -73,8 +72,36 @@ const postsController = {
             console.error(error);
             res.status(500).json({ error: "An error occurred" });
         }
+    },
+
+//Check user 
+checkU: async (req, res) => {
+    try {
+        const { email } = req.query;
+        const sql = "SELECT * FROM users WHERE email = ?";
+        const [rows] = await pool.query(sql, [email]);
+
+        if (rows.length === 0) {
+            // If no user was found, send an appropriate response
+            return res.json({
+                status: "error",
+                message: "Utilisateur introuvable"
+            });
+        }
+
+        res.json({
+            status: "success"
+        });
+    } catch (error) {
+        console.log(error);
+        res.status(500).json({
+            status: "error",
+            message: "An error occurred while checking the user"
+        });
     }
-    ,
+},
+
+    
 
 
     //Table TRS

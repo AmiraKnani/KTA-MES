@@ -17,13 +17,11 @@ let verificationCodes = {}; // This could be a database in a real application
 
 app.post('/api/coderequest', (req, res) => {
   const { email } = req.body;
-
   let code = Math.floor(100000 + Math.random() * 900000);
   verificationCodes[email] = code; // Store the code
 
-  // Send the code to the email address...
-
-  res.json({ success: true });
+  // Return the code in the response
+  res.json({ success: true, code: code });
 });
 
 app.post('/api/verifycode', (req, res) => {
