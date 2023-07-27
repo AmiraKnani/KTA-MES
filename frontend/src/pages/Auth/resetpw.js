@@ -8,29 +8,33 @@ import Input from '@mui/base/Input';
 import KTAimg from '../../images/KTA.png'
 import '../../css/App.css'
 import Footer from '../../components/Footer';
+emailjs.init('ZI2HUO6U0zPsqZdR5');
+
 function Resetpw() {
   //verify if the email exists
   const handleSubmitemail = async (event) => {
     event.preventDefault();
     var { email } = document.forms[0];
     localStorage.clear();
-    console.log(document.forms[0])
-    let code = Math.floor(100000 + Math.random() * 900000)
+    console.log("Form data:", document.forms[0]);
+    let code = Math.floor(100000 + Math.random() * 900000);
     const data = { email: email.value, code: code };
     try {
-      const response = await axios.post('/api/coderequest', data);
-      if (response.data.exists) {
+      const response = await axios.post('http://localhost:3001/api/coderequest', data);
+      console.log("Axios response data:", response.data);
+      if (response.data.success) {
         localStorage.setItem('resetMail', email.value);
         var templateParams = {
           email: email.value,
           code: code
         };
-        emailjs.send('service_9fl84wo', 'template_ku6xsbi', templateParams, 'S6ao3GJZ9msvkAUAO')
+        emailjs.send('service_6f1ny2w', 'template_umam7if', templateParams)
           .then(function (response) {
             console.log('SUCCESS!', response.status, response.text);
           }, function (error) {
             console.log('FAILED...', error);
           });
+        
         toast.success('Please check your email for your code', {
           position: "top-right",
           autoClose: 700,
@@ -56,9 +60,10 @@ function Resetpw() {
         });
       }
     } catch (error) {
-      console.log(error);
+      console.error("Error in handleSubmitemail:", error);
     }
   };
+  
   //change the password
   const handleSubmitchange = async (event) => {
     event.preventDefault();
