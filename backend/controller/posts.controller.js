@@ -211,6 +211,19 @@ const postsController = {
         }
     },
 
+        //Get Semaine
+        getSemaine: async (req, res) => {
+            try {
+                const { date } = req.query;
+                const [rows, fields] = await pool.query("SELECT Poste, AVG(TRS) as avgTRS FROM TRS  WHERE `Date initiale` = ? and `Type périodicité`='Semaine' GROUP BY Poste", [date])
+                const posts = rows.map(row => ({ poste: row.Poste, taux: row.avgTRS }));
+                res.json({ posts });
+    
+            } catch (error) {
+                console.log(error)
+            }
+        },
+
 
     //Get Mois
     getMois: async (req, res) => {
@@ -229,7 +242,20 @@ const postsController = {
     getTp: async (req, res) => {
         try {
             const { id } = req.query;
-            const [rows, fields] = await pool.query("select `Taux Performance` from TRS where `Poste`=? order by `Date initiale` ", [id])
+            const [rows, fields] = await pool.query("select AVG(`Taux Performance`) as `Taux Performance` , `Nom périodicité`  from TRS where `Poste`=? and `Type périodicité`='Mois' group by `Nom périodicité` order by `Date initiale`  ", [id])
+            res.json({
+                data: rows
+            })
+
+        } catch (error) {
+            console.log(error)
+        }
+    },
+
+    //Get TP1
+    getTp1: async (req, res) => {
+        try {
+            const [rows, fields] = await pool.query("select AVG(`Taux Performance`) as `Taux Performance` , `Nom périodicité`  from TRS where  `Type périodicité`='Mois' group by `Nom périodicité`   ")
             res.json({
                 data: rows
             })
@@ -243,7 +269,7 @@ const postsController = {
     getTq: async (req, res) => {
         try {
             const { id } = req.query;
-            const [rows, fields] = await pool.query("select `Taux Qualité` from TRS where `Poste`=? order by `Date initiale` ", [id])
+            const [rows, fields] = await pool.query("select AVG(`Taux Qualité`) as `Taux Qualité` , `Nom périodicité`  from TRS where `Poste`=? and `Type périodicité`='Mois' group by `Nom périodicité` order by `Date initiale`  ", [id])
             res.json({
                 data: rows
             })
@@ -253,11 +279,38 @@ const postsController = {
         }
     },
 
+    //Get TQ1
+    getTq1: async (req, res) => {
+        try {
+            const [rows, fields] = await pool.query("select AVG(`Taux Qualité`) as `Taux Qualité` , `Nom périodicité`  from TRS where  `Type périodicité`='Mois' group by `Nom périodicité`   ")
+            res.json({
+                data: rows
+            })
+
+        } catch (error) {
+            console.log(error)
+        }
+    },
+
+
     //Get TRG
     getTrg: async (req, res) => {
         try {
             const { id } = req.query;
-            const [rows, fields] = await pool.query("select TRG from TRS where `Poste`=? order by `Date initiale` ", [id])
+            const [rows, fields] = await pool.query("select AVG(TRG) as TRG , `Nom périodicité`  from TRS where `Poste`=? and `Type périodicité`='Mois' group by `Nom périodicité` order by `Date initiale` ", [id])
+            res.json({
+                data: rows
+            })
+
+        } catch (error) {
+            console.log(error)
+        }
+    },
+
+    //Get TRG1
+    getTrg1: async (req, res) => {
+        try {
+            const [rows, fields] = await pool.query("select AVG(TRG) as TRG , `Nom périodicité`  from TRS where  `Type périodicité`='Mois' group by `Nom périodicité`   ")
             res.json({
                 data: rows
             })
@@ -271,8 +324,21 @@ const postsController = {
     getTre: async (req, res) => {
         try {
             const { id } = req.query;
-            const [rows, fields] = await pool.query("select TRE from TRS where `Poste`=? order by `Date initiale` ", [id])
+            const [rows, fields] = await pool.query("select AVG(TRE) as TRE , `Nom périodicité`  from TRS where `Poste`=? and `Type périodicité`='Mois' group by `Nom périodicité` order by `Date initiale` ", [id])
             const posts = rows.map(row => ({ poste: row.Poste, taux: row.avgTRS }));
+            res.json({
+                data: rows
+            })
+
+        } catch (error) {
+            console.log(error)
+        }
+    },
+
+    //Get TRE1
+    getTre1: async (req, res) => {
+        try {
+            const [rows, fields] = await pool.query("select AVG(TRE) as TRE , `Nom périodicité`  from TRS where  `Type périodicité`='Mois' group by `Nom périodicité`   ")
             res.json({
                 data: rows
             })

@@ -172,9 +172,6 @@ export default function MiniDrawer() {
       <Charte/>
     </div> 
      
-    <div>
-      <ChartsTaux data={backendData}/>
-    </div>
 
     <div>
       <Table/>

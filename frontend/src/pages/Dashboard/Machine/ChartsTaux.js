@@ -123,7 +123,7 @@ return(
   <div className="item">
   <div className="collapsible-boxtaux cbtd3">
     <div className="headertaux ctd3" >
-    Taux économique
+    Taux de rendement économique
         </div>
     <div className='show-content'>
       <div className='row'>

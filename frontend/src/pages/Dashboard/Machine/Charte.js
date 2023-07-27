@@ -1,4 +1,5 @@
 import Dialog from '@mui/material/Dialog';
+import { AreaChart, Area } from 'recharts';
 import DialogTitle from '@mui/material/DialogTitle';
 import DialogContent from '@mui/material/DialogContent';
 import DialogActions from '@mui/material/DialogActions';
@@ -25,6 +26,7 @@ import { registerLocale, setDefaultLocale } from "react-datepicker";
 import fr from 'date-fns/locale/fr';
 import { format } from 'date-fns';
 import { getWeek } from 'date-fns';
+import ChartsTaux from '../Machine/CardTaux'
 
 
 registerLocale('fr', fr);
@@ -33,6 +35,7 @@ setDefaultLocale('fr');
 
 
 function Charte() {
+
   const [dialogOpen, setDialogOpen] = useState(false);
   const [dialogOpen1, setDialogOpen1] = useState(false);
   const [dialogOpen2, setDialogOpen2] = useState(false);
@@ -59,7 +62,7 @@ function Charte() {
       setYearError('');  // Clear any previous error
       setYear(newYear);
     } else {
-      setYearError('Please enter a valid year');
+      setYearError('Veuillez introduire une année valide');
     }
   }
 
@@ -86,6 +89,24 @@ function Charte() {
       setDialogOpen(true);
     }
 
+  };
+
+  const numberToMonth = (num) => {
+    const months = {
+      1: 'Janvier',
+      2: 'Février',
+      3: 'Mars',
+      4: 'Avril',
+      5: 'Mai',
+      6: 'Juin',
+      7: 'Juillet',
+      8: 'Août',
+      9: 'Septembre',
+      10: 'Octobre',
+      11: 'Novembre',
+      12: 'Décembre'
+    };
+    return months[num];
   };
 
 
@@ -273,11 +294,42 @@ function Charte() {
   }, [startDate]);  // adding startDate as a dependency
 
 
-
   const handleButtonClick3 = () => {
     setPosts(JourPosts);
     setShouldDisplayData3(true);
   };
+
+
+  const [SemainePosts, setSemainePosts] = useState([]);
+  const [shouldDisplayData9, setShouldDisplayData9] = useState(false);
+
+  useEffect(() => {
+    fetch(`http://localhost:5000/api/Semaine?date=${formattedDate}`)
+      .then(response => response.json())
+      .then(data => {
+        const fetchedPosts = data.posts.map((post, index) => {
+          let label = "Poste " + post.poste.substring(1);
+          let obj = {
+            value: post.poste,
+            label: label,
+            taux: post.taux / 100
+          }
+          return obj;
+        });
+        setSemainePosts(fetchedPosts);
+        console.log(fetchedPosts)
+      })
+      .catch(error => console.error('Error:', error));
+  }, [startDate]);
+
+
+  const handleButtonClick9 = () => {
+    setPosts(SemainePosts);
+    setShouldDisplayData9(true);
+  };
+
+
+  
 
   const [MoisPosts, setMoisPosts] = useState([]);
   const [shouldDisplayData4, setShouldDisplayData4] = useState(false);
@@ -430,14 +482,7 @@ function Charte() {
 
 
 
-
-
-
-
-
-
-
-
+  const [selectedOptionState, setSelectedOptionState] = useState(null);
   let obj = []
   const handleChangeSelect = selectedOption => {
     checkboxRefA.current.checked = false
@@ -455,7 +500,230 @@ function Charte() {
       temp.push(aux)
     }
     setFiltered(temp)
+    setSelectedOptionState(selectedOption[0]);
+    console.log(selectedOption[0])
+
   }
+
+
+  // Define a new state for fetched data
+  const [fetchedData, setFetchedData] = useState([]);
+
+  useEffect(() => {
+    if (selectedOptionState) {
+      const fetchData = async () => {
+        try {
+          console.log('Fetching data with ID', selectedOptionState.value);
+          const response = await fetch(`http://localhost:5000/api/getTp?id=${selectedOptionState.value}`);
+          if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+          }
+          const responseJson = await response.json();
+          console.log('Response:', responseJson);
+
+          if (!responseJson.data) {
+            throw new Error('Data is undefined');
+          }
+
+          const fetchedPosts = responseJson.data.map((post, index) => {
+            return {
+              poste: post["Nom périodicité"],
+              tauxProductivite: post["Taux Performance"] / 100
+            };
+          });
+
+
+          setFetchedData(fetchedPosts);
+          console.log('Fetched posts:', fetchedPosts);
+        } catch (error) {
+          console.error('Error:', error);
+        }
+      };
+      fetchData();
+    }
+  }, [selectedOptionState]);
+
+  // Define a new state for fetched data
+  const [fetchedData1, setFetchedData1] = useState([]);
+
+  useEffect(() => {
+    if (selectedOptionState) {
+      const fetchData = async () => {
+        try {
+          console.log('Fetching data with ID', selectedOptionState.value);
+          const response = await fetch(`http://localhost:5000/api/getTq?id=${selectedOptionState.value}`);
+          if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+          }
+          const responseJson = await response.json();
+          console.log('Response:', responseJson);
+
+          if (!responseJson.data) {
+            throw new Error('Data is undefined');
+          }
+
+          const fetchedPosts = responseJson.data.map((post, index) => {
+            return {
+              poste: post["Nom périodicité"],
+              tauxProductivite: post["Taux Qualité"] / 100
+            };
+          });
+
+
+          setFetchedData1(fetchedPosts);
+          console.log('Fetched posts:', fetchedPosts);
+        } catch (error) {
+          console.error('Error:', error);
+        }
+      };
+      fetchData();
+    }
+  }, [selectedOptionState]);
+
+
+  // Define a new state for fetched data
+  const [fetchedData2, setFetchedData2] = useState([]);
+
+  useEffect(() => {
+    if (selectedOptionState) {
+      const fetchData = async () => {
+        try {
+          console.log('Fetching data with ID', selectedOptionState.value);
+          const response = await fetch(`http://localhost:5000/api/getTrg?id=${selectedOptionState.value}`);
+          if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+          }
+          const responseJson = await response.json();
+          console.log('Response:', responseJson);
+
+          if (!responseJson.data) {
+            throw new Error('Data is undefined');
+          }
+
+          const fetchedPosts = responseJson.data.map((post, index) => {
+            return {
+              poste: post["Nom périodicité"],
+              tauxProductivite: post["TRG"] / 100
+            };
+          });
+
+
+          setFetchedData2(fetchedPosts);
+          console.log('Fetched posts:', fetchedPosts);
+        } catch (error) {
+          console.error('Error:', error);
+        }
+      };
+      fetchData();
+    }
+  }, [selectedOptionState]);
+
+
+  // Define a new state for fetched data
+  const [fetchedData3, setFetchedData3] = useState([]);
+
+  useEffect(() => {
+    if (selectedOptionState) {
+      const fetchData = async () => {
+        try {
+          console.log('Fetching data with ID', selectedOptionState.value);
+          const response = await fetch(`http://localhost:5000/api/getTre?id=${selectedOptionState.value}`);
+          if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+          }
+          const responseJson = await response.json();
+          console.log('Response:', responseJson);
+
+          if (!responseJson.data) {
+            throw new Error('Data is undefined');
+          }
+
+          const fetchedPosts = responseJson.data.map((post, index) => {
+            return {
+              poste: post["Nom périodicité"],
+              tauxProductivite: post["TRE"] / 100
+            };
+          });
+          setFetchedData3(fetchedPosts);
+          console.log('Fetched posts:', fetchedPosts);
+        } catch (error) {
+          console.error('Error:', error);
+        }
+      };
+      fetchData();
+    }
+  }, [selectedOptionState]);
+
+
+  const [Tp1, setTp1] = useState([]);
+
+  useEffect(() => {
+    fetch('http://localhost:5000/api/getTp1')
+      .then(response => response.json())
+      .then(data => {
+        const fetchedPosts = data.data.map((post, index) => {
+          return {
+            poste: post["Nom périodicité"],
+            tauxProductivite: post["Taux Performance"] / 100
+          };
+        });
+        setTp1(fetchedPosts);
+      })
+      .catch(error => console.error('Error:', error));
+  }, []);
+
+  const [Tq1, setTq1] = useState([]);
+
+  useEffect(() => {
+    fetch('http://localhost:5000/api/getTq1')
+      .then(response => response.json())
+      .then(data => {
+        const fetchedPosts = data.data.map((post, index) => {
+          return {
+            poste: post["Nom périodicité"],
+            tauxProductivite: post["Taux Qualité"] / 100
+          };
+        });
+        setTq1(fetchedPosts);
+      })
+      .catch(error => console.error('Error:', error));
+  }, []);
+
+  const [Trg, setTrg] = useState([]);
+
+  useEffect(() => {
+    fetch('http://localhost:5000/api/getTrg1')
+      .then(response => response.json())
+      .then(data => {
+        const fetchedPosts = data.data.map((post, index) => {
+          return {
+            poste: post["Nom périodicité"],
+            tauxProductivite: post["TRG"] / 100
+          };
+        });
+        setTrg(fetchedPosts);
+      })
+      .catch(error => console.error('Error:', error));
+  }, []);
+
+  const [Tre, setTre] = useState([]);
+
+  useEffect(() => {
+    fetch('http://localhost:5000/api/getTre1')
+      .then(response => response.json())
+      .then(data => {
+        const fetchedPosts = data.data.map((post, index) => {
+          return {
+            poste: post["Nom périodicité"],
+            tauxProductivite: post["TRE"] / 100
+          };
+        });
+        setTre(fetchedPosts);
+      })
+      .catch(error => console.error('Error:', error));
+  }, []);
+
+
 
 
   if (posts[0]) {
@@ -596,11 +864,88 @@ function Charte() {
     return null;
   };
 
+  const CustomTooltip1 = ({ active, payload, label }) => {
+    if (active && payload && payload.length) {
+      return (
+        <div className="custom-tooltip1">
+          <p className="Poste">
+            <span style={{ color: 'white' }}>
+              {`Mois: ${numberToMonth(payload[0].payload.poste)}`}
+            </span>
+          </p>
+          <p className="Taux"><span style={{ color: 'white' }}>{`Taux: ${(Number(payload[0].payload.tauxProductivite) * 100).toFixed(1)}%`}</span></p>
+        </div>
+      );
+    }
+
+
+
+    return null;
+  };
+
+  const CustomTooltip2 = ({ active, payload, label }) => {
+    if (active && payload && payload.length) {
+      return (
+        <div className="custom-tooltip2">
+          <p className="Poste">
+            <span style={{ color: 'white' }}>
+              {`Mois: ${numberToMonth(payload[0].payload.poste)}`}
+            </span>
+          </p>
+          <p className="Taux"><span style={{ color: 'white' }}>{`Taux: ${(Number(payload[0].payload.tauxProductivite) * 100).toFixed(1)}%`}</span></p>
+        </div>
+      );
+    }
+
+
+
+    return null;
+  };
+
+  const CustomTooltip3 = ({ active, payload, label }) => {
+    if (active && payload && payload.length) {
+      return (
+        <div className="custom-tooltip3">
+          <p className="Poste">
+            <span style={{ color: 'white' }}>
+              {`Mois: ${numberToMonth(payload[0].payload.poste)}`}
+            </span>
+          </p>
+          <p className="Taux"><span style={{ color: 'white' }}>{`Taux: ${(Number(payload[0].payload.tauxProductivite) * 100).toFixed(1)}%`}</span></p>
+        </div>
+      );
+    }
+
+
+
+    return null;
+  };
+
+  const CustomTooltip4 = ({ active, payload, label }) => {
+    if (active && payload && payload.length) {
+      return (
+        <div className="custom-tooltip4">
+          <p className="Poste">
+            <span style={{ color: 'white' }}>
+              {`Mois: ${numberToMonth(payload[0].payload.poste)}`}
+            </span>
+          </p>
+          <p className="Taux"><span style={{ color: 'white' }}>{`Taux: ${(Number(payload[0].payload.tauxProductivite) * 100).toFixed(1)}%`}</span></p>
+        </div>
+      );
+    }
+
+
+
+    return null;
+  };
+
 
 
 
   return (
     <>
+
       <br />
 
       <div className="parent-container">
@@ -625,7 +970,11 @@ function Charte() {
                   >
                     <CartesianGrid strokeDasharray="3 3" />
                     <XAxis dataKey="value" />
-                    <YAxis dataKey="taux" tickFormatter={formatter} domain={[0.805, 0.815]} />
+                    <YAxis dataKey="taux" tickFormatter={formatter} domain={[0.805, 0.815]} tick={props => (
+                      <text {...props} fontSize={16} fontFamily='Arial'>
+                        {props.payload.value}
+                      </text>
+                    )} />
                     <Tooltip content={<CustomTooltip />} />
                     <Legend />
                     <Bar dataKey="taux" name="Taux de rendement synthétique" fill="#1F69EF" />
@@ -639,6 +988,7 @@ function Charte() {
 
         </div>
         <div className="container">
+          <div className="filterBy">Filtrer par</div>
           <div className="filter-component">
             <div className="header-chart" onClick={toggleFilterContent}>
               Période
@@ -695,18 +1045,19 @@ function Charte() {
                   </DialogActions>
                 </Dialog>
 
-                <Dialog onClose={handleClose3} open={dialogOpen3} PaperProps={{ style: { width: '22%', height: '55%' } }}>
+                <Dialog onClose={handleClose3} open={dialogOpen3} PaperProps={{ style: { width: '22%', height: '60%' } }}>
                   <DialogTitle>Choisissez une semaine</DialogTitle>
                   <DialogContent>
                     {selectedPeriod === 'week' && (
                       <DatePicker
                         selected={startDate}
-                        onChange={(date) => { handleButtonClick3(); handleDateChange(date); }}
+                        onChange={(date) => { handleButtonClick9(); handleDateChange(date); }}
                         open={isOpen}
                         onInputClick={() => setIsOpen(!isOpen)}
                         calendarClassName="custom-datepicker"
                         dateFormat="dd/MM/yyyy"
                         showWeekNumbers={selectedPeriod === 'week'}
+                        filterDate={(date) => date.getDay() === 1}
                       />
                     )}
                   </DialogContent>
@@ -735,7 +1086,7 @@ function Charte() {
                     <Button onClick={handleClose4}>Close</Button>
                   </DialogActions>
                 </Dialog>
-                <Dialog onClose={handleClose5} open={dialogOpen5} PaperProps={{ style: { width: '18%', height: '47%' } }}>
+                <Dialog onClose={handleClose5} open={dialogOpen5} PaperProps={{ style: { width: '18%', height: '54%' } }}>
                   <DialogTitle>Choisissez un trimestre</DialogTitle>
                   <DialogContent>
                     {selectedPeriod === 'quarter' && (
@@ -746,13 +1097,13 @@ function Charte() {
                         <Button onClick={handleButtonClick7}>Juillet-Septembre</Button>
                         <Button onClick={handleButtonClick8}>Octobre-Decembre</Button>
                         <div style={{ marginTop: '20px' }}>
-                        <input
-                          type="number"
-                          value={year}
-                          onChange={handleYearChange}
-                          placeholder="Enter a year"
-                        />
-                        {yearError && <p>{yearError}</p>}
+                          <input
+                            type="number"
+                            value={year}
+                            onChange={handleYearChange}
+                            placeholder="Enter a year"
+                          />
+                          {yearError && <p>{yearError}</p>}
                         </div>
                       </>
                     )}
@@ -777,8 +1128,8 @@ function Charte() {
                   {isSearchCollapsed ? <ExpandMore /> : <ExpandLess />}
                 </IconButton>
               </div>
-              <div className={`content ${isSearchCollapsed ? '' : 'show-content'}`}>
-                <div className='selectcont'>
+              <div className={`content ${isSearchCollapsed ? '' : 'show-content'}`} >
+                <div className='selectcont' >
                   <Select
                     className='select'
                     ref={selecRef}
@@ -794,7 +1145,7 @@ function Charte() {
                     options={posts}
                     onChange={handleChangeSelect}
                   /></div>
-                <div className="checkcontainer">
+                <div className="checkcontainer" >
                   <div className="checkboxdiv"><input type='checkbox' ref={checkboxRefA} onChange={event => handleChangeGroupe(event, "A")} />A(0..99)</div>
                   <div className="checkboxdiv"><input type='checkbox' ref={checkboxRefB} onChange={event => handleChangeGroupe(event, "B")} />B(100..199)</div>
                   <div className="checkboxdiv"><input type='checkbox' ref={checkboxRefC} onChange={event => handleChangeGroupe(event, "C")} />C(200..299)</div>
@@ -832,6 +1183,161 @@ function Charte() {
         </div>
 
 
+      </div>
+
+      <div className="grid-container">
+        <div className="item">
+          <div className="collapsible-boxtaux cbtd">
+            <div className="headertaux ctd" >
+              Taux de performance
+            </div>
+            <div className='show-content'>
+              <div className='row'>
+                <div className="parenttrs">
+                  <div className='insidetaux' >
+                    <ResponsiveContainer width={'100%'} height={'99%'}>
+                      <AreaChart
+                        width={750}
+                        height={250}
+                        data={Object.keys(fetchedData).length === 0 ? Tp1 : fetchedData}
+                        margin={{
+                          top: 20,
+                          right: 0,
+                          left: 0,
+                          bottom: 0,
+                        }}
+                      >
+                        <CartesianGrid strokeDasharray="3 3" />
+                        <XAxis dataKey="poste" />
+                        <YAxis tickFormatter={formatter} domain={[0.92, 0.96]} tick={props => (
+                          <text {...props} fontSize={16} fontFamily='Arial'>
+                            {props.payload.value}
+                          </text>
+                        )} />
+                        <Tooltip content={<CustomTooltip1 />} />
+                        <Area type="monotone" dataKey="tauxProductivite" stroke="#1F69EF" fill="#1F69EF" />
+                      </AreaChart>
+
+                    </ResponsiveContainer>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div className="item">
+          <div className="collapsible-boxtaux cbtd1">
+            <div className="headertaux ctd1" >
+              Taux de qualité
+            </div>
+            <div className='show-content'>
+              <div className='row'>
+                <div className="parenttrs">
+                  <div className='insidetaux' >
+                    <ResponsiveContainer width={'100%'} height={'99%'}>
+                      <AreaChart
+                        width={750}
+                        height={250}
+                        data={Object.keys(fetchedData1).length === 0 ? Tq1 : fetchedData1}
+                        margin={{
+                          top: 20,
+                          right: 0,
+                          left: 0,
+                          bottom: 0,
+                        }}
+                      >
+                        <CartesianGrid strokeDasharray="3 3" />
+                        <XAxis dataKey="poste" />
+                        <YAxis tickFormatter={formatter} domain={[0.92, 0.96]} tick={props => (
+                          <text {...props} fontSize={16} fontFamily='Arial'>
+                            {props.payload.value}
+                          </text>
+                        )} />
+                        <Tooltip content={<CustomTooltip2 />} />
+                        <Area type="monotone" dataKey="tauxProductivite" stroke="#3367A8" fill="#3367A8" />
+                      </AreaChart>
+                    </ResponsiveContainer>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div></div>
+        <div className="item">
+          <div className="collapsible-boxtaux cbtd2">
+            <div className="headertaux ctd2" >
+              Taux de rendement globale
+            </div>
+            <div className='show-content'>
+              <div className='row'>
+                <div className="parenttrs">
+                  <div className='insidetaux' >
+                    <ResponsiveContainer width={'100%'} height={'99%'}>
+                      <AreaChart
+                        width={750}
+                        height={250}
+                        data={Object.keys(fetchedData2).length === 0 ? Trg : fetchedData2}
+                        margin={{
+                          top: 20,
+                          right: 0,
+                          left: 0,
+                          bottom: 0,
+                        }}
+                      >
+                        <CartesianGrid strokeDasharray="3 3" />
+                        <XAxis dataKey="poste" />
+                        <YAxis tickFormatter={formatter} domain={[0.62, 0.7]} tick={props => (
+                          <text {...props} fontSize={16} fontFamily='Arial'>
+                            {props.payload.value}
+                          </text>
+                        )} />
+                        <Tooltip content={<CustomTooltip3 />} />
+                        <Area type="monotone" dataKey="tauxProductivite" stroke="#C18A20" fill="#C18A20" />
+                      </AreaChart>
+                    </ResponsiveContainer>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div className="item">
+          <div className="collapsible-boxtaux cbtd3">
+            <div className="headertaux ctd3" >
+              Taux de rendement économique
+            </div>
+            <div className='show-content'>
+              <div className='row'>
+                <div className="parenttrs">
+                  <div className='insidetaux' >
+                    <ResponsiveContainer width={'100%'} height={'99%'}>
+                      <AreaChart
+                        width={750}
+                        height={250}
+                        data={Object.keys(fetchedData3).length === 0 ? Tre : fetchedData3}
+                        margin={{
+                          top: 20,
+                          right: 0,
+                          left: 0,
+                          bottom: 0,
+                        }}
+                      >
+                        <CartesianGrid strokeDasharray="3 3" />
+                        <XAxis dataKey="poste" />
+                        <YAxis tickFormatter={formatter} domain={[0.52, 0.6]} tick={props => (
+                          <text {...props} fontSize={16} fontFamily='Arial'>
+                            {props.payload.value}
+                          </text>
+                        )} />
+                        <Tooltip content={<CustomTooltip4 />} />
+                        <Area type="monotone" dataKey="tauxProductivite" stroke="#5EA131" fill="#5EA131" />
+                      </AreaChart>
+                    </ResponsiveContainer>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
 
     </>
