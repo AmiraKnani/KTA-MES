@@ -10,13 +10,11 @@ const postsController = {
 
         try {
             const [rows, fields] = await pool.query("SELECT * FROM users WHERE email = ?", [email]);
-
             if (rows.length === 0) {
                 return res.status(400).json({
                     error: 'Invalid email or password',
                 });
             }
-
             const user = rows[0];
 
             if (mdp !== user.mdp) {
@@ -462,11 +460,12 @@ const postsController = {
     // getTables
     getTables: async (req, res) => {
         try {
-          const [rows] = await pool.query("select `Code Poste`, `Designation Poste`, etat from postes");
+          const [rows] = await pool.query("select `Code Poste`, `Designation Poste`, etat,image from postes");
           const data = rows.map(row => ({
             'Code Poste': row['Code Poste'],
             'Designation Poste': row['Designation Poste'].replace(/\r/g, ''),
             'Etat': row['etat'].replace(/\r/g, ''),
+            'Image': row['image'],
           }));
           res.json({
             data: data

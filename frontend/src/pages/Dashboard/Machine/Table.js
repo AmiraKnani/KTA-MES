@@ -32,14 +32,19 @@ setDefaultLocale('fr');
 
 
 function Table() {
-  const [selectedPost, setSelectedPost] = useState(null);
+
   const [dialogOpen, setDialogOpen] = useState(false);
   const [selectedPeriod, setSelectedPeriod] = useState("");
   const [isFilterCollapsed, setIsFilterCollapsed] = useState(true);
   const [isSearchCollapsed, setIsSearchCollapsed] = useState(true);
+  const [selectedPost, setSelectedPost] = useState(null);
+  const [selectedImageUrl, setSelectedImageUrl] = useState(null);
   const toggleFilterContent = () => {
     setIsFilterCollapsed(!isFilterCollapsed);
   };
+
+ 
+
 
   const [posts, setPosts] = useState([]);
 
@@ -66,6 +71,21 @@ function Table() {
     }
   }
 
+  const handlePostSelection = (post) => {
+    setSelectedPost(post);
+    // Convert the binary image data to a Base64 encoded string
+    const base64Image = btoa(
+      new Uint8Array(post.Image.data).reduce(
+        (data, byte) => data + String.fromCharCode(byte),
+        ''
+      )
+    );
+    
+    // Create a data URL for the image
+    const imageUrl = 'data:image/jpeg;base64,' + base64Image;
+    setSelectedImageUrl(imageUrl);
+    console.log(imageUrl);
+  };
 
 
 
@@ -97,6 +117,7 @@ function Table() {
 
 
   };
+  
 
 
   return (
@@ -114,7 +135,7 @@ function Table() {
     <div
       className={`collapsible-table ${selectedPost === post ? 'selected-post' : ''}`}
       key={index}
-      onClick={() => setSelectedPost(post)}
+      onClick={() => handlePostSelection(post)}
     >
       <div className="header-data">
         <span>{post['Code Poste']}</span>
@@ -138,13 +159,15 @@ function Table() {
     <div className="header-chartP">
       <span>Désignation Poste</span>
       <div style={{ fontSize: '17px', textAlign: 'end' }}>
-        {selectedPost ? selectedPost['Designation Poste'].replace(/\r/g, '') : 'Poste Etanchéité'}
+        {selectedPost ? selectedPost['Designation Poste'].replace(/\r/g, ''): 'Poste Etanchéité'}
       </div>
     </div>
     <br/>
     <div className="KTA">
       <div className="parent-container">
-        <img src={prod} alt="KTA prod" /><img src={prod1} alt="KTA prod" />
+      <div className="image-container">
+      <img src={selectedImageUrl} alt="Selected Post's Image" />
+      </div>
       </div>
     </div>
   </div>

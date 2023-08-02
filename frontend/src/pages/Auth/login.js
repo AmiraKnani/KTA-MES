@@ -55,11 +55,10 @@ function App() {
   
       if (response.data.data) { 
         const user = response.data.data;
-  
         localStorage.setItem('isLoggedin', true);
         localStorage.setItem('username', user.nom);
         localStorage.setItem('email', user.email);
-        localStorage.setItem('pic', user.pic_path);
+        localStorage.setItem('pic', user.pic);
         navigate('/dashboard');
       } 
     } catch (error) {
