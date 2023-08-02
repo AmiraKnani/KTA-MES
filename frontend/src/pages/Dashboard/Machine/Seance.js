@@ -55,9 +55,7 @@ return (
   <div className="collapsible-box">
     <div className="header-chart" onClick={toggleContent}>
 
-      <IconButton onClick={toggleContent}>
-        {isCollapsed ? <ExpandMore /> : <ExpandLess />}
-      </IconButton>
+     
     </div>
     <div className={`content ${isCollapsed ? '' : 'show-content'}`}>
       <div className="row">
@@ -66,8 +64,8 @@ return (
             <center>
               <Card
                 className="box-content"
-                title="Nbr Poste"
-                data={<span style={{ color: '#1F69EF' }}>{nbrPoste}</span>}
+                title={<span style={{ color: '#1F69EF', fontSize: '18px' }}>{"Nombre de Poste"}</span>}
+                data={<span style={{ color: '#1F69EF', fontSize: '23px' }}>{nbrPoste}</span>}
               />
 
             </center>
@@ -76,8 +74,8 @@ return (
             <center>
               <Card
                 className="box-content"
-                title="Durée totale"
-                data={<span style={{ color: '#1F69EF' }}>{"1058h:58"}</span>}
+                title={<span style={{  fontSize: '18px' }}>{"Durée totale"}</span>}
+                data={<span style={{ color: '#1F69EF', fontSize: '23px' }}>{"1058h:58"}</span>}
               />
             </center>
           </div>
@@ -85,8 +83,8 @@ return (
             <center>
               <Card
                 className="box-content"
-                title="Durée séance"
-                data={<span style={{ color: '#1F69EF' }}>{"08:00"}</span>}
+                title={<span style={{  fontSize: '18px' }}>{"Durée séance"}</span>}
+                data={<span style={{ color: '#1F69EF', fontSize: '23px' }}>{"08:00"}</span>}
               />
             </center>
           </div>
@@ -94,8 +92,8 @@ return (
             <center>
               <Card
                 className="box-content"
-                title="Durée écoulée"
-                data={<span style={{ color: '#1F69EF' }}>{"07:03"}</span>}
+                title={<span style={{  fontSize: '18px' }}>{"Durée écoulée"}</span>}
+                data={<span style={{ color: '#1F69EF', fontSize: '23px' }}>{"07:03"}</span>}
               />
             </center>
           </div>
@@ -103,8 +101,8 @@ return (
             <center>
               <Card
                 className="box-content"
-                title="Taux D.E"
-                data={<span style={{ color: '#1F69EF' }}>{ppbar}</span>}
+                title={<span style={{ fontSize: '18px' }}>{"Taux D.E"}</span>}
+                data={<span style={{ color: '#1F69EF', fontSize: '23px' }}>{ppbar}</span>}
               />
             </center>
           </div>

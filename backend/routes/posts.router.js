@@ -17,6 +17,8 @@ router.get("/TP", postsController.getAvgTp)
 router.get("/TQ", postsController.getAvgTq)
 router.get("/TRG", postsController.getAvgTrg)
 router.get("/Poste", postsController.getPoste)
+router.get("/Operation", postsController.getOperation)
+router.get("/OP", postsController.getOP)
 router.get("/Matin", postsController.getMatin)
 router.get("/Soir", postsController.getSoir)
 router.get("/Nuit", postsController.getNuit)
@@ -35,6 +37,7 @@ router.get("/getTrimestre1", postsController.getTrimestre1)
 router.get("/getTrimestre2", postsController.getTrimestre2)
 router.get("/getTrimestre3", postsController.getTrimestre3)
 router.get("/getTrimestre4", postsController.getTrimestre4)
+router.get("/getTables", postsController.getTables)
 
 
 

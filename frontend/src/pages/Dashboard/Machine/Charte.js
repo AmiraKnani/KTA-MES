@@ -183,6 +183,60 @@ function Charte() {
       .catch(error => console.error('Error:', error));
   }, []);
 
+  const [operations, setOperations] = useState([]);
+  const [selectedOperation, setSelectedOperation] = useState(null);
+  const [shouldDisplayData10, setShouldDisplayData10] = useState(false);
+  const [fetchedOperations, setFetchedOperations] = useState([]);
+  // Fetch operations
+  useEffect(() => {
+    fetch('http://localhost:5000/api/Operation')
+      .then(response => response.json())
+      .then(data => {
+        const fetchedOperations = data.map((operation) => ({
+          value: operation,
+          label: operation,
+        }));
+        setOperations(fetchedOperations);
+      })
+      .catch(error => console.error('Error:', error));
+  }, []);
+
+  useEffect(() => {
+    if (selectedOperation) {
+      fetch(`http://localhost:5000/api/OP?designationOperation=${selectedOperation.value}`)
+        .then(response => response.json())
+        .then(data => {
+          const posts = data.posts.map((post) => ({
+            value: post.poste,
+            label: "Poste " + post.poste.substring(1),
+            taux: parseFloat(post.taux).toFixed(2)/100,
+          }));
+          setFiltered(posts);
+        })
+        .catch(error => console.error('Error:', error));
+    }
+  }, [selectedOperation]);
+  
+  
+  
+
+  const handleChangeSelect1 = selectedOption => {
+    // If selectedOption is not an array, wrap it in an array
+    const optionsArray = Array.isArray(selectedOption) ? selectedOption : [selectedOption];
+  
+    const transformedOptions = optionsArray.map(option => ({
+      poste: option.value,
+      label: option.label,
+      avgTRS: option.avgTRS, // Note: avgTRS might not be available in the object
+    }));
+  
+    setFiltered(transformedOptions);
+    setSelectedOperation(optionsArray[0]); // If you want to select the first option
+  };
+  
+  
+
+
 
   const [matinPosts, setMatinPosts] = useState([]);
   const [shouldDisplayData, setShouldDisplayData] = useState(false);
@@ -291,7 +345,7 @@ function Charte() {
         console.log(fetchedPosts)
       })
       .catch(error => console.error('Error:', error));
-  }, [startDate]);  // adding startDate as a dependency
+  }, [startDate]);  
 
 
   const handleButtonClick3 = () => {
@@ -504,6 +558,9 @@ function Charte() {
     console.log(selectedOption[0])
 
   }
+
+
+
 
 
   // Define a new state for fetched data
@@ -854,7 +911,7 @@ function Charte() {
       return (
         <div className="custom-tooltip">
           <p className="Poste"><span style={{ color: 'white' }}>{`Poste: ${payload[0].payload.value}`}</span></p>
-          <p className="Taux"><span style={{ color: 'white' }}>{`Taux: ${(Number(payload[0].payload.taux) * 100).toFixed(1)}%`}</span></p>
+          <p className="Taux"><span style={{ color: 'white' }}>{`Taux: ${(Number(payload[0].payload.taux) * 100).toFixed(2)}%`}</span></p>
         </div>
       );
     }
@@ -873,7 +930,7 @@ function Charte() {
               {`Mois: ${numberToMonth(payload[0].payload.poste)}`}
             </span>
           </p>
-          <p className="Taux"><span style={{ color: 'white' }}>{`Taux: ${(Number(payload[0].payload.tauxProductivite) * 100).toFixed(1)}%`}</span></p>
+          <p className="Taux"><span style={{ color: 'white' }}>{`Taux: ${(Number(payload[0].payload.tauxProductivite) * 100).toFixed(2)}%`}</span></p>
         </div>
       );
     }
@@ -892,7 +949,7 @@ function Charte() {
               {`Mois: ${numberToMonth(payload[0].payload.poste)}`}
             </span>
           </p>
-          <p className="Taux"><span style={{ color: 'white' }}>{`Taux: ${(Number(payload[0].payload.tauxProductivite) * 100).toFixed(1)}%`}</span></p>
+          <p className="Taux"><span style={{ color: 'white' }}>{`Taux: ${(Number(payload[0].payload.tauxProductivite) * 100).toFixed(2)}%`}</span></p>
         </div>
       );
     }
@@ -911,7 +968,7 @@ function Charte() {
               {`Mois: ${numberToMonth(payload[0].payload.poste)}`}
             </span>
           </p>
-          <p className="Taux"><span style={{ color: 'white' }}>{`Taux: ${(Number(payload[0].payload.tauxProductivite) * 100).toFixed(1)}%`}</span></p>
+          <p className="Taux"><span style={{ color: 'white' }}>{`Taux: ${(Number(payload[0].payload.tauxProductivite) * 100).toFixed(2)}%`}</span></p>
         </div>
       );
     }
@@ -930,7 +987,7 @@ function Charte() {
               {`Mois: ${numberToMonth(payload[0].payload.poste)}`}
             </span>
           </p>
-          <p className="Taux"><span style={{ color: 'white' }}>{`Taux: ${(Number(payload[0].payload.tauxProductivite) * 100).toFixed(1)}%`}</span></p>
+          <p className="Taux"><span style={{ color: 'white' }}>{`Taux: ${(Number(payload[0].payload.tauxProductivite) * 100).toFixed(2)}%`}</span></p>
         </div>
       );
     }
@@ -943,10 +1000,11 @@ function Charte() {
 
 
 
+
   return (
     <>
 
-      <br />
+      
 
       <div className="parent-container">
         <div className="collapsible-taux">
@@ -1176,9 +1234,10 @@ function Charte() {
                     styles={customStyles}
                     placeholder="Search"
                     isMulti
-                    options={posts}
-                    onChange={handleChangeSelect}
-                  /></div></div></div>
+                    options={operations}
+                    onChange={handleChangeSelect1}
+                  />
+                  </div></div></div>
           </div>
         </div>
 

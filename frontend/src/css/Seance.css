@@ -37,17 +37,19 @@
   .box {
     flex: 1 0 50%;
     min-width: 100px;
-    max-width:15%;
+    max-width:13%;
     margin-left: 2%;
     margin-right: 2%;
-    margin-top: -2%;
+    margin-top: -4%;
+    margin-bottom: -1.5%;
     /* Add additional styles as needed */
   }
   
   .box-content {
-    /* Add additional styles as needed */
+ 
   }
 
+  
  
   
   

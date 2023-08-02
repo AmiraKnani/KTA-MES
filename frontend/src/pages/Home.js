@@ -317,7 +317,7 @@ export default function MiniDrawer() {
                 : dashboard  
               }
               <br/> 
-      <div><br/><br/><Footer view="dash"/> </div>
+      <div><Footer view="dash"/> </div>
       </Box>
     </Box></>
   );

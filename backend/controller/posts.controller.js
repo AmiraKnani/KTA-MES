@@ -59,11 +59,11 @@ const postsController = {
             const { email, mdp } = req.body;
             const sql = "UPDATE users SET mdp = ? WHERE email = ?";
             const [result] = await pool.query(sql, [mdp, email]); // Here, the first parameter in the array should be 'mdp', not 'email'.
-    
+
             if (result.affectedRows === 0) {
                 return res.status(404).json({ error: "User not found" });
             }
-    
+
             res.json({
                 status: "success",
                 message: "User updated successfully",
@@ -74,34 +74,34 @@ const postsController = {
         }
     },
 
-//Check user 
-checkU: async (req, res) => {
-    try {
-        const { email } = req.query;
-        const sql = "SELECT * FROM users WHERE email = ?";
-        const [rows] = await pool.query(sql, [email]);
+    //Check user 
+    checkU: async (req, res) => {
+        try {
+            const { email } = req.query;
+            const sql = "SELECT * FROM users WHERE email = ?";
+            const [rows] = await pool.query(sql, [email]);
 
-        if (rows.length === 0) {
-            // If no user was found, send an appropriate response
-            return res.json({
+            if (rows.length === 0) {
+                // If no user was found, send an appropriate response
+                return res.json({
+                    status: "error",
+                    message: "Utilisateur introuvable"
+                });
+            }
+
+            res.json({
+                status: "success"
+            });
+        } catch (error) {
+            console.log(error);
+            res.status(500).json({
                 status: "error",
-                message: "Utilisateur introuvable"
+                message: "An error occurred while checking the user"
             });
         }
+    },
 
-        res.json({
-            status: "success"
-        });
-    } catch (error) {
-        console.log(error);
-        res.status(500).json({
-            status: "error",
-            message: "An error occurred while checking the user"
-        });
-    }
-},
 
-    
 
 
     //Table TRS
@@ -238,18 +238,18 @@ checkU: async (req, res) => {
         }
     },
 
-        //Get Semaine
-        getSemaine: async (req, res) => {
-            try {
-                const { date } = req.query;
-                const [rows, fields] = await pool.query("SELECT Poste, AVG(TRS) as avgTRS FROM TRS  WHERE `Date initiale` = ? and `Type périodicité`='Semaine' GROUP BY Poste", [date])
-                const posts = rows.map(row => ({ poste: row.Poste, taux: row.avgTRS }));
-                res.json({ posts });
-    
-            } catch (error) {
-                console.log(error)
-            }
-        },
+    //Get Semaine
+    getSemaine: async (req, res) => {
+        try {
+            const { date } = req.query;
+            const [rows, fields] = await pool.query("SELECT Poste, AVG(TRS) as avgTRS FROM TRS  WHERE `Date initiale` = ? and `Type périodicité`='Semaine' GROUP BY Poste", [date])
+            const posts = rows.map(row => ({ poste: row.Poste, taux: row.avgTRS }));
+            res.json({ posts });
+
+        } catch (error) {
+            console.log(error)
+        }
+    },
 
 
     //Get Mois
@@ -426,6 +426,62 @@ checkU: async (req, res) => {
             console.log(error)
         }
     },
+
+    // getOperations
+    getOperation: async (req, res) => {
+        try {
+            const [rows] = await pool.query("SELECT `Designation Opération` FROM operations");
+            const result = rows.map(row => row['Designation Opération'].trim());
+            res.json(result);
+
+        } catch (error) {
+            console.log(error);
+            res.status(500).send('An error occurred');
+        }
+    },
+
+    // getOperationsPoste
+    getOP: async (req, res) => {
+        try {
+            const designationOperation = req.query.designationOperation;
+            const [rows] = await pool.query("SELECT TRS.Poste, AVG(TRS.TRS) AS avgTRS FROM TRS JOIN postes P ON P.`Code Poste` = TRS.Poste JOIN operations O ON O.`Code Opération` = P.`Code Opération` WHERE O.`Designation Opération` = ? GROUP BY TRS.Poste;", [designationOperation]);
+
+            const posts = rows.map(row => ({
+                poste: row.Poste,
+                taux: row.avgTRS
+            }));
+
+            res.json({ posts });
+
+        } catch (error) {
+            console.log(error);
+            res.status(500).send('An error occurred');
+        }
+    },
+
+    // getTables
+    getTables: async (req, res) => {
+        try {
+          const [rows] = await pool.query("select `Code Poste`, `Designation Poste`, etat from postes");
+          const data = rows.map(row => ({
+            'Code Poste': row['Code Poste'],
+            'Designation Poste': row['Designation Poste'].replace(/\r/g, ''),
+            'Etat': row['etat'].replace(/\r/g, ''),
+          }));
+          res.json({
+            data: data
+          });
+        } catch (error) {
+          console.log(error);
+          res.status(500).send('An error occurred');
+        }
+      },
+      
+
+
+    
+
+
 
     getById: async (req, res) => {
         try {

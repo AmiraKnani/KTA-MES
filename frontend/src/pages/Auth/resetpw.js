@@ -1,14 +1,13 @@
 import 'react-toastify/dist/ReactToastify.css';
 import { ToastContainer, toast } from 'react-toastify';
 import React, { useState, useEffect } from "react";
-import emailjs from '@emailjs/browser';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
 import Input from '@mui/base/Input';
 import KTAimg from '../../images/KTA.png'
 import '../../css/App.css'
 import Footer from '../../components/Footer';
-emailjs.init('ZI2HUO6U0zPsqZdR5');
+
 
 function Resetpw() {
 //verify if the email exists
@@ -43,11 +42,15 @@ const handleSubmitemail = async (event) => {
     if (response.data.success) {
       let code = response.data.code;
       localStorage.setItem('resetMail', email.value);
-      var templateParams = {
-        email: email.value,
-        code: code
+      var sendEmailData = {
+        to: email.value,
+        templateId: "d-1c471dac89a14be1bc6414c49d51a788",
+        dynamicTemplateData: {
+          email:email.value,
+          code: code
+        }
       };
-      emailjs.send('service_6f1ny2w', 'template_umam7if', templateParams)
+      axios.post('http://localhost:3001/send-email', sendEmailData)
         .then(function (response) {
           console.log('SUCCESS!', response.status, response.text);
         }, function (error) {

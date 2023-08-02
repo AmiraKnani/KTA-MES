@@ -284,3 +284,46 @@
   
 }
 
+.collapsible-container {
+  max-height: 235px; 
+  overflow-y: scroll;
+  overflow-x: hidden;
+}
+
+.header-chart1 span,
+.header-data span {
+  display: inline-block;
+  width: 30%; /* You can adjust this value to make sure they align properly */
+  text-align: left; /* Align text to the left or center, as needed */
+}
+
+/* You can adjust the width of individual columns if necessary */
+.header-chart1 span:nth-child(1),
+.header-data span:nth-child(1) {
+  width: 20%;
+}
+
+.header-chart1 span:nth-child(2),
+.header-data span:nth-child(2) {
+  width: 30%;
+}
+
+.header-chart1 span:nth-child(3),
+.header-data span:nth-child(3) {
+  width: 20%;
+}
+
+.selected-post {
+  background-color: #f0f0f0; /* Or any other color you prefer */
+}
+
+.header-chart, .header-chartP {
+  display: flex;
+  justify-content: space-between; /* Aligns the content to the far edges */
+  align-items: center; /* Centers items vertically */
+}
+
+
+
+
+
