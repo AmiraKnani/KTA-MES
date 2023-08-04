@@ -38,6 +38,8 @@ router.get("/getTrimestre2", postsController.getTrimestre2)
 router.get("/getTrimestre3", postsController.getTrimestre3)
 router.get("/getTrimestre4", postsController.getTrimestre4)
 router.get("/getTables", postsController.getTables)
+router.get("/getTu", postsController.getAvgTu)
+router.get("/getTa", postsController.getAvgTa)
 
 
 

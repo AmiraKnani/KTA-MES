@@ -11,7 +11,6 @@ import ReactDOM from 'react-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faAngleDoubleDown, faSearch } from '@fortawesome/free-solid-svg-icons';
 import React from 'react';
-import { BarChart, Bar, Cell, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
 import IconButton from '@mui/material/IconButton';
 import { ExpandMore, ExpandLess } from '@material-ui/icons';
 import Operation from './Operation';
@@ -26,6 +25,11 @@ import fr from 'date-fns/locale/fr'; // or your preferred locale
 import Footer from '../../../components/Footer';
 import prod from '../../../images/prod.png'
 import prod1 from '../../../images/prod1.png'
+import { Chart, PieController, ArcElement, CategoryScale, Legend, Tooltip } from 'chart.js';
+
+Chart.register(PieController, ArcElement, CategoryScale, Legend, Tooltip);
+
+
 
 registerLocale('fr', fr);
 setDefaultLocale('fr');
@@ -39,14 +43,22 @@ function Table() {
   const [isSearchCollapsed, setIsSearchCollapsed] = useState(true);
   const [selectedPost, setSelectedPost] = useState(null);
   const [selectedImageUrl, setSelectedImageUrl] = useState(null);
+  
   const toggleFilterContent = () => {
     setIsFilterCollapsed(!isFilterCollapsed);
   };
 
- 
+
+  const [avgTu, setAvgTu] = useState(0);
+  const [avgTa, setAvgTa] = useState(0);
+  const myPieChartRef = useRef(null);
+  const chartRef = useRef(null);
+
 
 
   const [posts, setPosts] = useState([]);
+
+
 
 
   useEffect(() => {
@@ -80,12 +92,72 @@ function Table() {
         ''
       )
     );
-    
+
     // Create a data URL for the image
     const imageUrl = 'data:image/jpeg;base64,' + base64Image;
     setSelectedImageUrl(imageUrl);
     console.log(imageUrl);
+
+    const fetchPostData = async () => {
+      try {
+        const responseTu = await fetch(`http://localhost:5000/api/getTu?poste=${post['Code Poste']}`);
+        const dataTu = await responseTu.json();
+        setAvgTu(dataTu.data);
+      } catch (error) {
+        console.error(error);
+      }
+  
+      try {
+        const responseTa = await fetch(`http://localhost:5000/api/getTa?poste=${post['Code Poste']}`);
+        const dataTa = await responseTa.json();
+        setAvgTa(dataTa.data);
+      } catch (error) {
+        console.error(error);
+      }
+    };
+  
+    // Call the async function
+    fetchPostData();
   };
+
+
+// Effect to initialize the chart
+useEffect(() => {
+  if (myPieChartRef.current) {
+    const ctx = myPieChartRef.current.getContext('2d');
+    if (ctx) {
+      // Create a new chart instance
+      chartRef.current = new Chart(ctx, {
+        type: 'doughnut',
+        data: {
+          datasets: [{
+            data: [avgTu, avgTa],
+            backgroundColor: ['#5EA131', '#1F69EF69']
+          }],
+          labels: ['Taux de production  (%) ', 'Taux d’arrêt  (%) ']
+        }
+      });
+    }
+  }
+  return () => {
+    if (chartRef.current) {
+      chartRef.current.destroy();
+    }
+  };
+}, []); // Empty dependency array ensures this runs only on mount and unmount
+
+// Effect to update chart data when avgTu or avgTa change
+useEffect(() => {
+  if (chartRef.current) {
+    chartRef.current.data.datasets[0].data = [avgTu, avgTa];
+    chartRef.current.update();
+  }
+}, [avgTu, avgTa]);
+
+
+ 
+  
+  
 
 
 
@@ -117,7 +189,9 @@ function Table() {
 
 
   };
-  
+
+
+
 
 
   return (
@@ -131,47 +205,51 @@ function Table() {
             <span>Etat</span>
           </div>
           <div className="collapsible-container">
-  {posts.map((post, index) => (
-    <div
-      className={`collapsible-table ${selectedPost === post ? 'selected-post' : ''}`}
-      key={index}
-      onClick={() => handlePostSelection(post)}
-    >
-      <div className="header-data">
-        <span>{post['Code Poste']}</span>
-        <span>{post['Designation Poste'].replace(/\r/g, '')}</span>
-        <span>{renderEtat(post.Etat)}</span>
-      </div>
-    </div>
-  ))}
-</div>
+            {posts.map((post, index) => (
+              <div
+                className={`collapsible-table ${selectedPost === post ? 'selected-post' : ''}`}
+                key={index}
+                onClick={() => handlePostSelection(post)}
+              >
+                <div className="header-data">
+                  <span>{post['Code Poste']}</span>
+                  <span>{post['Designation Poste'].replace(/\r/g, '')}</span>
+                  <span>{renderEtat(post.Etat)}</span>
+                </div>
+              </div>
+            ))}
+          </div>
 
 
         </div>
 
 
-        <div className="container">
-  <div className="filter-component">
-    <div className="header-chart">
-      <span>Code Poste</span>
-      <span>{selectedPost ? selectedPost['Code Poste'] : 'P043'}</span>
-    </div>
-    <div className="header-chartP">
-      <span>Désignation Poste</span>
-      <div style={{ fontSize: '17px', textAlign: 'end' }}>
-        {selectedPost ? selectedPost['Designation Poste'].replace(/\r/g, ''): 'Poste Etanchéité'}
-      </div>
-    </div>
-    <br/>
-    <div className="KTA">
-      <div className="parent-container">
-      <div className="image-container">
-      <img src={selectedImageUrl} alt="Selected Post's Image" />
-      </div>
-      </div>
-    </div>
-  </div>
-</div>
+        <div className="container1">
+          <div className="filter-component1">
+            <div className="header-chart">
+              <span>Code Poste</span>
+              <span>{selectedPost ? selectedPost['Code Poste'] : ''}</span>
+            </div>
+            <div className="header-chartP">
+              <span>Désignation Poste</span>
+              <div style={{ fontSize: '17px', textAlign: 'end' }}>
+                {selectedPost ? selectedPost['Designation Poste'].replace(/\r/g, '') : ''}
+              </div>
+            </div>
+            <br />
+            <div className="KTA">
+              <div className="parent-container1">
+                <div className="pie-chart-container">
+                <canvas ref={myPieChartRef}></canvas>
+                </div>
+                <div className="image-container">
+                  <img src={selectedImageUrl} alt={selectedImageUrl} />
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div>
 
 
 

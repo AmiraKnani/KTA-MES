@@ -151,6 +151,33 @@ const postsController = {
         }
     },
 
+    // AVG Tu per post
+    getAvgTu: async (req, res) => {
+        try {
+            const { poste } = req.query;
+            const [rows, fields] = await pool.query("SELECT AVG(`Temps Utile`) FROM TRS WHERE Poste = ?", [poste]);
+            const count = rows[0]['AVG(`Temps Utile`)'];
+            res.json({ data: count });
+        } catch (error) {
+            console.log(error);
+            res.status(500).json({ error: 'An error occurred while fetching data' }); // Sending an error response to the client
+        }
+    },
+
+    // AVG TA per post
+    getAvgTa: async (req, res) => {
+        try {
+            const { poste } = req.query;
+            const [rows, fields] = await pool.query("SELECT AVG(`Temps Arrêts Non Planifiés`+`Temps Arrêts Planifiés`) FROM TRS WHERE Poste = ?", [poste]);
+            const count = rows[0]['AVG(`Temps Arrêts Non Planifiés`+`Temps Arrêts Planifiés`)'];
+            res.json({ data: count });
+        } catch (error) {
+            console.log(error);
+            res.status(500).json({ error: 'An error occurred while fetching data' }); // Sending an error response to the client
+        }
+    },
+
+
     //AVG TQ
     getAvgTq: async (req, res) => {
         try {
@@ -460,25 +487,25 @@ const postsController = {
     // getTables
     getTables: async (req, res) => {
         try {
-          const [rows] = await pool.query("select `Code Poste`, `Designation Poste`, etat,image from postes");
-          const data = rows.map(row => ({
-            'Code Poste': row['Code Poste'],
-            'Designation Poste': row['Designation Poste'].replace(/\r/g, ''),
-            'Etat': row['etat'].replace(/\r/g, ''),
-            'Image': row['image'],
-          }));
-          res.json({
-            data: data
-          });
+            const [rows] = await pool.query("select `Code Poste`, `Designation Poste`, etat,image from postes");
+            const data = rows.map(row => ({
+                'Code Poste': row['Code Poste'],
+                'Designation Poste': row['Designation Poste'].replace(/\r/g, ''),
+                'Etat': row['etat'].replace(/\r/g, ''),
+                'Image': row['image'],
+            }));
+            res.json({
+                data: data
+            });
         } catch (error) {
-          console.log(error);
-          res.status(500).send('An error occurred');
+            console.log(error);
+            res.status(500).send('An error occurred');
         }
-      },
-      
+    },
 
 
-    
+
+
 
 
 

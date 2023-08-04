@@ -131,7 +131,7 @@
   padding: 16px;
   font-weight: bold;
   display: flex;
-  justify-content: space-between;
+  
   align-items: center;
 }
 
@@ -147,7 +147,6 @@
 .header-chart1 {
   color: #334D6E;
   font-size: large;
- 
   padding: 16px;
   margin-left: 5%;
   margin-right: 5%;
@@ -225,7 +224,7 @@
   border: 3px solid transparent;
   box-shadow: 0 0 10px rgba(76, 78, 161, 0.3); 
   border-radius: 8px;
-  width: 250%;
+  width: 70%;
   display: inline-block;
   vertical-align: top;
   margin-right: 2rem;
@@ -249,6 +248,9 @@
   display: flex;
   justify-content: space-between;
 }
+.parent-container1 {
+  display: flex;
+}
 
 .filter-component {
   border: 3px solid transparent;
@@ -257,6 +259,19 @@
   display: inline-block;
   vertical-align: middle;
   margin-bottom: 10px;
+  
+}
+
+.filter-component1 {
+  border: 3px solid transparent;
+  box-shadow: 0 0 10px rgba(76, 78, 161, 0.3); 
+  border-radius: 8px;
+  display: inline-block;
+  vertical-align: middle;
+  margin-bottom: 10px;
+  height: 340px;
+  width: 450px;
+  overflow: hidden; 
 }
 
 
@@ -284,8 +299,15 @@
   
 }
 
+.container1 {
+  display: flex;
+  flex-direction: column;
+  
+}
+
 .collapsible-container {
-  max-height: 235px; 
+  max-height: 265px; 
+  max-width: 900px;
   overflow-y: scroll;
   overflow-x: hidden;
 }
@@ -319,15 +341,26 @@
 
 .header-chart, .header-chartP {
   display: flex;
-  justify-content: space-between; /* Aligns the content to the far edges */
-  align-items: center; /* Centers items vertically */
+  justify-content: space-between; 
+  align-items: center; 
 }
 
 .image-container {
-  float: right;
-  padding-left: 160px;
+  padding-left: 65px; 
+  width: 120px;
+  height: 120px;
+  
 
 }
+
+.pie-chart-container {
+  width: 180px; 
+  height: 180px; 
+  margin-top: -15px;
+  margin-left: 5px;
+}
+
+
 
 
 
