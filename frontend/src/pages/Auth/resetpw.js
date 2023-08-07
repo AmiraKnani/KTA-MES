@@ -204,7 +204,7 @@ const handleSubmitcode = async (event) => {
           </div>
           <Input name="email" type="email" align="center" />
         </div>
-        <Input id="ddd" type="button" value="Reset mot de passe" onClick={handleSubmitemail} />
+        <Input id="ddd" type="button" value="Envoyer" onClick={handleSubmitemail} />
         <div className="cont"><Link to="/">&lt; Se connecter</Link></div>
       </form>
       <div className="centered-footer">

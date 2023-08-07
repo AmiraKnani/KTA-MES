@@ -211,12 +211,33 @@ font-size:50px;
   font-size: 18px;
   maxHeight: '200px';
 }
-#ddd{
-  background-color: #1F69EF;;
-  color:white;
-  width: 20%;
-  margin-left:40%
+#ddd {
+  background-color: #1F69EF;
+  color: white;
+  width: 30%; 
+  margin-left: 35%; 
+  text-align: center;
 }
+
+/* Medium screens */
+@media (min-width: 576px) {
+  #ddd {
+    width: 20%;
+    margin-left: 40%;
+  }
+}
+
+/* Large screens */
+@media (min-width: 768px) {
+  #ddd {
+    width: 20%;
+    margin-left: 40%;
+  }
+}
+
+
+
+
 .cont{
   font-size: small;
   text-align: center;
@@ -414,6 +435,19 @@ font-size:50px;
   margin-top: 20px;
 }
 
+@media only screen and (max-width: 768px) {
+  .collapsible-box {
+    border: 1px solid #ddd;
+    box-shadow: 0 0 10px rgba(76, 78, 161, 0.3); 
+    border-radius: 8px;
+    margin-top: 20px;
+    width: 38%;
+  }
+
+
+}
+
+
 .box2{
   display: flex;
   justify-content: center;
@@ -510,14 +544,6 @@ font-size:50px;
 }
 
 
-
-
-
-
-
-
-
-
 .chaart{
   bottom: 0;
   margin-left: 200px;
@@ -595,71 +621,12 @@ margin-bottom: 10px;
   background-color: white;
   min-height: 100vh;
 }
-/*/////////////////////////
-.float-container {
-  padding: 20px;
-}
-
-.float-child {
-  width: 40%;
-  float: right;
-  padding:20px;
-}  
-.foorm{
-  right:20px
-}
 
 
-* {
-  box-sizing: border-box;
-  margin: 0;
-  
-  padding: 0;
-  font-family: 'Lato', sans-serif;
+.toggle-password {
+  font-size: 20px; 
+  margin-left: 70%;  
+  top: -74px;
+  cursor: pointer;
+  position: relative;
 }
-.filt{
-  width: 200px;
-  left :600px;
-  top : auto;
-}
-.right {
-  box-sizing: border-box;
-  left:250px;
-  margin-left: 250px;
-  height: 100vh;
-  padding: 0;
-
-}
-.seances{
-  text-align: center;
-  font-size: 3rem;
-  color:white;
-  background-color: #334d6e;
-}
-.seance{
-
-  margin-left: auto;
-  width: 100%;
-  margin-right: auto;
-  align-items: center;
-
-
-}
-.card{
-  width: 100%;
-}
-.comps{
-  margin-top:auto;
-  margin-bottom:auto;
-  background-color: red;
-  text-align: center;
-  width: 50%;
-  height:50px;
-}
-.chart{
-  display: flex;
-  height: 90vh;
-  align-items: center;
-  justify-content: center;
-  font-size: 3rem;
-}*/

@@ -44,6 +44,23 @@
     margin-bottom: -1.5%;
     /* Add additional styles as needed */
   }
+
+  
+/* This media query will target screens with a max width of 768px */
+@media only screen and (max-width: 768px) {
+  .parent {
+     /* Stacks children vertically */
+  }
+
+  .box {
+    flex: 1 0 20%; /* Adjusts to 2 boxes per row on smaller screens */
+    max-width: 20%; /* Allows boxes to fill half the width of the screen */
+    margin-top: 0%; 
+    padding-top: -30px;
+    margin-bottom: 1%;
+  }
+  
+}
   
   .box-content {
  

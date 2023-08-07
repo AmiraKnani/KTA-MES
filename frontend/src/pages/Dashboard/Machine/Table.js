@@ -42,15 +42,15 @@ function Table() {
   const [isFilterCollapsed, setIsFilterCollapsed] = useState(true);
   const [isSearchCollapsed, setIsSearchCollapsed] = useState(true);
   const [selectedPost, setSelectedPost] = useState(null);
-  const [selectedImageUrl, setSelectedImageUrl] = useState(null);
-  
+
+
   const toggleFilterContent = () => {
     setIsFilterCollapsed(!isFilterCollapsed);
   };
 
 
-  const [avgTu, setAvgTu] = useState(0);
-  const [avgTa, setAvgTa] = useState(0);
+  const [avgTu, setAvgTu] = useState(899.491);
+  const [avgTa, setAvgTa] = useState(252.256);
   const myPieChartRef = useRef(null);
   const chartRef = useRef(null);
 
@@ -61,23 +61,36 @@ function Table() {
 
 
 
+  const [selectedImageUrl, setSelectedImageUrl] = useState(null);
+
   useEffect(() => {
     fetch('http://localhost:5000/api/getTables')
       .then((response) => response.json())
       .then((data) => {
         setPosts(data.data);
+        if (data.data.length > 0 && data.data[0].Image) {
+          const base64Image = btoa(
+            new Uint8Array(data.data[0].Image.data).reduce(
+              (data, byte) => data + String.fromCharCode(byte),
+              ''
+            )
+          );
+          const imageUrl = 'data:image/jpeg;base64,' + base64Image;
+          setSelectedImageUrl(imageUrl);
+        }
       })
       .catch((error) => console.error(error));
   }, []);
 
+
   const renderEtat = (etat) => {
     switch (etat) {
       case 'Arrêt':
-        return <div style={{ backgroundColor: '#ec101091', color: '#C41313', borderRadius: '5px', width: '85px', textAlign: 'center' }}>Arrêt</div>;
+        return <div style={{ backgroundColor: '#ec101091', color: '#C41313', borderRadius: '5px', width: '85px', height: '24px', textAlign: 'center', fontSize:'14px' }}>Arrêt</div>;
       case 'Production':
-        return <div style={{ backgroundColor: '#5db82191', color: '#3B671D', borderRadius: '5px', width: '85px' }}>Production</div>;
+        return <div style={{ backgroundColor: '#5db82191', color: '#3B671D', borderRadius: '5px', width: '85px', height: '24px', textAlign: 'center', fontSize:'14px' }}>Production</div>;
       case 'Attente':
-        return <div style={{ backgroundColor: '#f0ab259e', color: '#9F721C', borderRadius: '5px', width: '85px', textAlign: 'center' }}>Attente</div>;
+        return <div style={{ backgroundColor: '#f0ab259e', color: '#9F721C', borderRadius: '5px', width: '85px',height: '24px', textAlign: 'center', fontSize:'14px' }}>Attente</div>;
       default:
         return null;
     }
@@ -106,7 +119,7 @@ function Table() {
       } catch (error) {
         console.error(error);
       }
-  
+
       try {
         const responseTa = await fetch(`http://localhost:5000/api/getTa?poste=${post['Code Poste']}`);
         const dataTa = await responseTa.json();
@@ -115,49 +128,49 @@ function Table() {
         console.error(error);
       }
     };
-  
+
     // Call the async function
     fetchPostData();
   };
 
 
-// Effect to initialize the chart
-useEffect(() => {
-  if (myPieChartRef.current) {
-    const ctx = myPieChartRef.current.getContext('2d');
-    if (ctx) {
-      // Create a new chart instance
-      chartRef.current = new Chart(ctx, {
-        type: 'doughnut',
-        data: {
-          datasets: [{
-            data: [avgTu, avgTa],
-            backgroundColor: ['#5EA131', '#1F69EF69']
-          }],
-          labels: ['Taux de production  (%) ', 'Taux d’arrêt  (%) ']
-        }
-      });
+  // Effect to initialize the chart
+  useEffect(() => {
+    if (myPieChartRef.current) {
+      const ctx = myPieChartRef.current.getContext('2d');
+      if (ctx) {
+        // Create a new chart instance
+        chartRef.current = new Chart(ctx, {
+          type: 'doughnut',
+          data: {
+            datasets: [{
+              data: [avgTu, avgTa],
+              backgroundColor: ['#5EA131', '#1F69EF69']
+            }],
+            labels: ['Taux de production  (%) ', 'Taux d’arrêt  (%) ']
+          }
+        });
+      }
     }
-  }
-  return () => {
+    return () => {
+      if (chartRef.current) {
+        chartRef.current.destroy();
+      }
+    };
+  }, []); // Empty dependency array ensures this runs only on mount and unmount
+
+  // Effect to update chart data when avgTu or avgTa change
+  useEffect(() => {
     if (chartRef.current) {
-      chartRef.current.destroy();
+      chartRef.current.data.datasets[0].data = [avgTu, avgTa];
+      chartRef.current.update();
     }
-  };
-}, []); // Empty dependency array ensures this runs only on mount and unmount
-
-// Effect to update chart data when avgTu or avgTa change
-useEffect(() => {
-  if (chartRef.current) {
-    chartRef.current.data.datasets[0].data = [avgTu, avgTa];
-    chartRef.current.update();
-  }
-}, [avgTu, avgTa]);
+  }, [avgTu, avgTa]);
 
 
- 
-  
-  
+
+
+
 
 
 
@@ -228,19 +241,19 @@ useEffect(() => {
           <div className="filter-component1">
             <div className="header-chart">
               <span>Code Poste</span>
-              <span>{selectedPost ? selectedPost['Code Poste'] : ''}</span>
+              <span>{selectedPost ? selectedPost['Code Poste'] : 'P043'}</span>
             </div>
             <div className="header-chartP">
               <span>Désignation Poste</span>
               <div style={{ fontSize: '17px', textAlign: 'end' }}>
-                {selectedPost ? selectedPost['Designation Poste'].replace(/\r/g, '') : ''}
+                {selectedPost ? selectedPost['Designation Poste'].replace(/\r/g, '') : 'Poste Etanchéité'}
               </div>
             </div>
             <br />
             <div className="KTA">
               <div className="parent-container1">
                 <div className="pie-chart-container">
-                <canvas ref={myPieChartRef}></canvas>
+                  <canvas ref={myPieChartRef}></canvas>
                 </div>
                 <div className="image-container">
                   <img src={selectedImageUrl} alt={selectedImageUrl} />

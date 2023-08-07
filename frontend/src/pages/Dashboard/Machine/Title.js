@@ -18,7 +18,7 @@ function Title({ pageTitle }) {
   return (
     <nav className="bar" style={navbarStyle}>
       <p>{pageTitle}</p> 
-      <p1 style={{ fontSize: '1rem' }}>{formattedDateTime}</p1>
+      <div className="date-time" style={{ fontSize: '1rem' }}>{formattedDateTime}</div>
     </nav>
   );
 }
