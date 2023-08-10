@@ -327,7 +327,7 @@ function Charte() {
   const formattedDate1 = format(startDate, 'M');
   const formattedDate2 = format(startDate, 'yyyy');
   
-  useEffect(() => {
+  const handleButtonClick3 = () => {
     console.log(formattedDate)
     // Appending formattedDate to the fetch URL
     fetch(`http://localhost:5000/api/Jour?date=${formattedDate}`)
@@ -346,21 +346,18 @@ function Charte() {
         setJourPosts(fetchedPosts);
         setPosts(fetchedPosts);  
         setShouldDisplayData3(true); 
+        console.log(fetchedPosts)
       })
       .catch(error => console.error('Error:', error));
-  }, [startDate]);  
+    };
 
 
-  const handleButtonClick3 = () => {
-    setPosts(JourPosts);
-    setShouldDisplayData3(true);
-  };
 
 
   const [SemainePosts, setSemainePosts] = useState([]);
   const [shouldDisplayData9, setShouldDisplayData9] = useState(false);
 
-  useEffect(() => {
+  const handleButtonClick9 = () => {
     fetch(`http://localhost:5000/api/Semaine?date=${formattedDate}`)
       .then(response => response.json())
       .then(data => {
@@ -379,13 +376,7 @@ function Charte() {
         console.log(fetchedPosts)
       })
       .catch(error => console.error('Error:', error));
-  }, [startDate]);
-
-
-  const handleButtonClick9 = () => {
-    setPosts(SemainePosts);
-    setShouldDisplayData9(true);
-  };
+    };
 
 
   
@@ -393,10 +384,9 @@ function Charte() {
   const [MoisPosts, setMoisPosts] = useState([]);
   const [shouldDisplayData4, setShouldDisplayData4] = useState(false);
 
-  useEffect(() => {
+  const handleButtonClick4 = () => {
     console.log(formattedDate1)
     console.log(formattedDate2)
-    // Appending formattedDate to the fetch URL
     fetch(`http://localhost:5000/api/Mois?date=${formattedDate1}&annee=${formattedDate2}`)
       .then(response => response.json())
       .then(data => {
@@ -415,15 +405,6 @@ function Charte() {
         console.log(fetchedPosts)
       })
       .catch(error => console.error('Error:', error));
-  }, [startDate]);
-
-
-
-
-
-  const handleButtonClick4 = () => {
-    setPosts(MoisPosts);
-    setShouldDisplayData4(true);
   };
 
   const [Tri1Posts, setTri1Posts] = useState([]);
@@ -431,6 +412,7 @@ function Charte() {
 
   useEffect(() => {
     // Appending formattedDate to the fetch URL
+    console.log(year)
     fetch(`http://localhost:5000/api/getTrimestre1?annee=${year}`)
       .then(response => response.json())
       .then(data => {
@@ -1099,7 +1081,7 @@ function Charte() {
                     {selectedPeriod === 'day' && (
                       <DatePicker
                         selected={startDate}
-                        onChange={(date) => { handleButtonClick3(); handleDateChange(date); }}
+                        onChange={(date) => { handleDateChange(date); handleButtonClick3();  }}
                         open={isOpen}
                         onInputClick={() => setIsOpen(!isOpen)}
                         calendarClassName="custom-datepicker"

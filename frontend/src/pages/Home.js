@@ -179,7 +179,25 @@ export default function MiniDrawer() {
 
     </>
    );
-   const machine="machine"
+   const machine=(   <>
+    <br/> <br/>
+   <div>
+     <Seance data={backendData}/>
+   </div>
+   <div>
+     <Taux/>
+   </div>
+   <div>
+     <Charte/>
+   </div> 
+    
+
+   <div>
+     <Table/>
+   </div> 
+
+   </>
+  );
    const homme="homme"
    const produit="produit"
    
