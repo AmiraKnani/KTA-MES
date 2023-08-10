@@ -49,8 +49,8 @@ function Table() {
   };
 
 
-  const [avgTu, setAvgTu] = useState(899.491);
-  const [avgTa, setAvgTa] = useState(252.256);
+  const [avgTu, setAvgTu] = useState(904.036);
+  const [avgTa, setAvgTa] = useState(248.068);
   const myPieChartRef = useRef(null);
   const chartRef = useRef(null);
 
@@ -241,12 +241,12 @@ function Table() {
           <div className="filter-component1">
             <div className="header-chart">
               <span>Code Poste</span>
-              <span>{selectedPost ? selectedPost['Code Poste'] : 'P043'}</span>
+              <span>{selectedPost ? selectedPost['Code Poste'] : 'P214'}</span>
             </div>
             <div className="header-chartP">
               <span>Désignation Poste</span>
               <div style={{ fontSize: '17px', textAlign: 'end' }}>
-                {selectedPost ? selectedPost['Designation Poste'].replace(/\r/g, '') : 'Poste Etanchéité'}
+                {selectedPost ? selectedPost['Designation Poste'].replace(/\r/g, '') : 'Ebavureuse - Mat:01050117'}
               </div>
             </div>
             <br />

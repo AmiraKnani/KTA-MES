@@ -326,8 +326,9 @@ function Charte() {
   const formattedDate = format(startDate, 'dd/MM/yyyy');
   const formattedDate1 = format(startDate, 'M');
   const formattedDate2 = format(startDate, 'yyyy');
-
+  
   useEffect(() => {
+    console.log(formattedDate)
     // Appending formattedDate to the fetch URL
     fetch(`http://localhost:5000/api/Jour?date=${formattedDate}`)
       .then(response => response.json())
@@ -340,9 +341,11 @@ function Charte() {
             taux: post.taux / 100
           }
           return obj;
+          console.log(obj)
         });
         setJourPosts(fetchedPosts);
-        console.log(fetchedPosts)
+        setPosts(fetchedPosts);  
+        setShouldDisplayData3(true); 
       })
       .catch(error => console.error('Error:', error));
   }, [startDate]);  
@@ -371,6 +374,8 @@ function Charte() {
           return obj;
         });
         setSemainePosts(fetchedPosts);
+        setPosts(fetchedPosts);  
+        setShouldDisplayData9(true); 
         console.log(fetchedPosts)
       })
       .catch(error => console.error('Error:', error));
@@ -389,6 +394,8 @@ function Charte() {
   const [shouldDisplayData4, setShouldDisplayData4] = useState(false);
 
   useEffect(() => {
+    console.log(formattedDate1)
+    console.log(formattedDate2)
     // Appending formattedDate to the fetch URL
     fetch(`http://localhost:5000/api/Mois?date=${formattedDate1}&annee=${formattedDate2}`)
       .then(response => response.json())
@@ -403,6 +410,8 @@ function Charte() {
           return obj;
         });
         setMoisPosts(fetchedPosts);
+        setPosts(fetchedPosts);  
+        setShouldDisplayData4(true); 
         console.log(fetchedPosts)
       })
       .catch(error => console.error('Error:', error));
@@ -660,7 +669,7 @@ function Charte() {
           const fetchedPosts = responseJson.data.map((post, index) => {
             return {
               poste: post["Nom périodicité"],
-              tauxProductivite: post["TRG"] / 100
+              tauxProductivite: post["trg"] / 100
             };
           });
 
@@ -698,7 +707,7 @@ function Charte() {
           const fetchedPosts = responseJson.data.map((post, index) => {
             return {
               poste: post["Nom périodicité"],
-              tauxProductivite: post["TRE"] / 100
+              tauxProductivite: post["tre"] / 100
             };
           });
           setFetchedData3(fetchedPosts);
@@ -755,7 +764,7 @@ function Charte() {
         const fetchedPosts = data.data.map((post, index) => {
           return {
             poste: post["Nom périodicité"],
-            tauxProductivite: post["TRG"] / 100
+            tauxProductivite: post["trg"] / 100
           };
         });
         setTrg(fetchedPosts);
@@ -772,7 +781,7 @@ function Charte() {
         const fetchedPosts = data.data.map((post, index) => {
           return {
             poste: post["Nom périodicité"],
-            tauxProductivite: post["TRE"] / 100
+            tauxProductivite: post["tre"] / 100
           };
         });
         setTre(fetchedPosts);
@@ -905,7 +914,7 @@ function Charte() {
 
   const formatter = (value) => `${value * 100}%`;
 
-  console.log(formattedDate);
+
   const CustomTooltip = ({ active, payload, label }) => {
     if (active && payload && payload.length) {
       return (
@@ -1084,7 +1093,7 @@ function Charte() {
                   </DialogActions>
                 </Dialog>
 
-                <Dialog onClose={handleClose2} open={dialogOpen2} PaperProps={{ style: { width: '22%', height: '55%' } }}>
+                <Dialog onClose={handleClose2} open={dialogOpen2} PaperProps={{ style: { width: '22%', height: '57%' } }}>
                   <DialogTitle>Choisissez un jour</DialogTitle>
                   <DialogContent>
                     {selectedPeriod === 'day' && (
