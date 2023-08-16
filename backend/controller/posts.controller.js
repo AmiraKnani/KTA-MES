@@ -310,7 +310,7 @@ const postsController = {
     //Get TP1
     getTp1: async (req, res) => {
         try {
-            const { rows } = await pool.query("SELECT AVG(\"Taux Performance\") as \"Taux Performance\", \"Nom périodicité\" FROM TRS WHERE \"Type périodicité\"='Mois' GROUP BY \"Nom périodicité\"");
+            const { rows } = await pool.query("SELECT AVG(\"Taux Performance\") as \"Taux Performance\", \"Nom périodicité\" FROM TRS WHERE \"Type périodicité\"='Mois' GROUP BY \"Nom périodicité\" ORDER BY MIN(\"Date initiale\")");
             res.json({ data: rows });
 
         } catch (error) {
@@ -333,7 +333,7 @@ const postsController = {
     //Get TQ1
     getTq1: async (req, res) => {
         try {
-            const { rows } = await pool.query("SELECT AVG(\"Taux Qualité\") as \"Taux Qualité\", \"Nom périodicité\" FROM TRS WHERE \"Type périodicité\"='Mois' GROUP BY \"Nom périodicité\"");
+            const { rows } = await pool.query("SELECT AVG(\"Taux Qualité\") as \"Taux Qualité\", \"Nom périodicité\" FROM TRS WHERE \"Type périodicité\"='Mois' GROUP BY \"Nom périodicité\" ORDER BY MIN(\"Date initiale\")");
             res.json({ data: rows });
 
         } catch (error) {
@@ -357,7 +357,7 @@ const postsController = {
     //Get TRG1
     getTrg1: async (req, res) => {
         try {
-            const { rows } = await pool.query("SELECT AVG(TRG) AS TRG, \"Nom périodicité\" FROM TRS WHERE \"Type périodicité\"='Mois' GROUP BY \"Nom périodicité\"");
+            const { rows } = await pool.query("SELECT AVG(TRG) AS TRG, \"Nom périodicité\" FROM TRS WHERE \"Type périodicité\"='Mois' GROUP BY \"Nom périodicité\" ORDER BY MIN(\"Date initiale\") ");
             res.json({ data: rows });
 
         } catch (error) {
@@ -382,7 +382,7 @@ const postsController = {
     //Get TRE1
     getTre1: async (req, res) => {
         try {
-            const { rows } = await pool.query("SELECT AVG(TRE) AS TRE, \"Nom périodicité\" FROM TRS WHERE \"Type périodicité\"='Mois' GROUP BY \"Nom périodicité\"");
+            const { rows } = await pool.query("SELECT AVG(TRE) AS TRE, \"Nom périodicité\" FROM TRS WHERE \"Type périodicité\"='Mois' GROUP BY \"Nom périodicité\" ORDER BY MIN(\"Date initiale\")");
             res.json({
                 data: rows
             });

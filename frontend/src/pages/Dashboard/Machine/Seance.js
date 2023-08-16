@@ -47,25 +47,24 @@ const ppbar = (
     variant={props.data.moy * 100 > 85 ? "success" ? props.data.moy * 100 > 50 : "warning" : "danger"}
     now={num} />
 );
-
+const fontSizeTitle = window.innerWidth <= 768 ? '16px' : '18px';
+const fontSizeData = window.innerWidth <= 768 ? '20px' : '23px';
 
 
 return (
 
   <div className="collapsible-box">
-    <div className="header-chart" onClick={toggleContent}>
-
-     
+    <div className="header-chart3" onClick={toggleContent}>
     </div>
     <div className={`content ${isCollapsed ? '' : 'show-content'}`}>
       <div className="row">
         <div className="parent">
-          <div className="box">
+          <div className="box4">
             <center>
               <Card
                 className="box-content"
-                title={<span style={{ color: '#1F69EF', fontSize: '18px' }}>{"Nombre de Poste"}</span>}
-                data={<span style={{ color: '#1F69EF', fontSize: '23px' }}>{nbrPoste}</span>}
+                title={<span style={{ color: '#334D6E',  fontSize: fontSizeTitle }}>{"Nombre de Postes"}</span>}
+                data={<span style={{ color: '#1F69EF',  fontSize: fontSizeData, fontWeight: 'bold' }}>{nbrPoste}</span>}
               />
 
             </center>
@@ -75,7 +74,7 @@ return (
               <Card
                 className="box-content"
                 title={<span style={{  fontSize: '18px' }}>{"Durée totale"}</span>}
-                data={<span style={{ color: '#1F69EF', fontSize: '23px' }}>{"1058h:58"}</span>}
+                data={<span style={{ color: '#1F69EF', fontSize: '23px' }}>{"1058h:5"}</span>}
               />
             </center>
           </div>

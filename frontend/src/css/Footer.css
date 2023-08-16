@@ -5,10 +5,17 @@
   align-items: center;
   color: #ffffff;
 }
-  .footerd {
-    position: sticky;
-    bottom:0;
-    width: 100%;
-    color:black;
-    height: 3%;
-  }
+
+.footerd {
+  position: sticky;
+  bottom: 0;
+  width: 100%;
+  color: white;
+  height: 3%;
+  background-color: #363A4A;
+  width: 120%; 
+  margin-left: -25px;
+  padding-left: 15px;
+  margin-bottom: -40px;
+  
+}

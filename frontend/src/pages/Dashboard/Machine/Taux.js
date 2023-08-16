@@ -117,7 +117,25 @@ function Taux(props) {
   }, []);
 
   const progress4 = parseFloat(TRG).toFixed(1);
+  const progressBarStyle = {
+    width: '1350%',
+    height: '1.5rem',
+    background: '#1f69ef80',
+    marginRight: '10px',
+    marginLeft: window.innerWidth <= 768 ? '-30px' : '-30px',
+    marginTop: window.innerWidth <= 768 ? '-15px' : '0',
+    marginBottom: window.innerWidth <= 768 ? '-15px' : '0'
+  };
 
+  const progressBarStyle1 = {
+    width: '1350%', 
+    height: '1.5rem', 
+    background: '#f0ab2580', 
+    marginRight: '10px', 
+    marginLeft: window.innerWidth <= 768 ? '-30px' : '-30px',
+    marginTop: window.innerWidth <= 768 ? '-15px' : '0',
+    marginBottom: window.innerWidth <= 768 ? '-15px' : '0'
+  };
 
 
 
@@ -126,9 +144,9 @@ function Taux(props) {
       <div className='show-content'>
         <div className='row'>
           <div className="parent">
-            <div className='box1'> <center>
+            <div className='box3'> <center>
               <CardTaux
-                className='box1'
+                className='box3'
                 title={
                   <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginLeft: '10px' }}>
                     <span style={{ fontSize: '24px', fontWeight: 'bold', color: '#1F69EF', marginBottom: '-40px', marginTop: '10px' }}>{`${progress2}%`}</span>
@@ -141,11 +159,11 @@ function Taux(props) {
                   <ProgressBar
                     now={progress2}
                     label={`${progress2}%`}
-                    style={{ width: '1350%', height: '1.5rem', background: '#1f69ef80', marginRight: '10px', marginLeft: '-30px' }}
+                    style={ progressBarStyle}
                   />
                 </div>}
               /></center></div>
-            <div className='box1'> <center><CardTaux
+            <div className='box5'> <center><CardTaux
               className='box1'
               title={
                 <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginLeft: '10px' }}>
@@ -159,7 +177,7 @@ function Taux(props) {
                 <ProgressBar
                   now={progress}
                   label={`${progress}%`}
-                  style={{ width: '1350%', height: '1.5rem', background: '#f0ab2580', marginRight: '10px', marginLeft: '-30px' }}
+                  style={progressBarStyle1}
 
                 // Adjust height here for bigger appearance 
                 />

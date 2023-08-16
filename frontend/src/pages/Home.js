@@ -250,7 +250,7 @@ export default function MiniDrawer() {
                >       
                  <DashboardIcon style={{ color: '#FFFFFF' }} />
                </ListItemIcon>
-               <ListItemText  primary="Dashboard" sx={{ opacity: open ? 1 : 0 }} />
+               <ListItemText  primary="Accueil" sx={{ opacity: open ? 1 : 0 }} />
              </ListItemButton>
 
            </ListItem>
@@ -273,7 +273,7 @@ export default function MiniDrawer() {
                >       
                <PrecisionManufacturingIcon style={{ color: '#FFFFFF' }}  />
               </ListItemIcon>
-               <ListItemText primary="Machine" sx={{ opacity: open ? 1 : 0 }} />
+              <ListItemText primary={<div style={{ display: 'block' }}>Suivi des postes<br />de travail</div>} sx={{ opacity: open ? 1 : 0 }} />
              </ListItemButton>
 
            </ListItem>
@@ -295,7 +295,7 @@ export default function MiniDrawer() {
                >       
                  <GroupsIcon style={{ color: '#FFFFFF' }} />
               </ListItemIcon>
-               <ListItemText primary="Homme" sx={{ opacity: open ? 1 : 0 }} />
+               <ListItemText primary="Suivi des hommes" sx={{ opacity: open ? 1 : 0 }} />
              </ListItemButton>
 
            </ListItem>
@@ -317,7 +317,7 @@ export default function MiniDrawer() {
                >       
                  <InventoryIcon  style={{ color: '#FFFFFF' }} />
               </ListItemIcon>
-               <ListItemText primary="Produit" sx={{ opacity: open ? 1 : 0 }} />
+               <ListItemText primary="Suivi de la matière" sx={{ opacity: open ? 1 : 0 }} />
              </ListItemButton>
 
            </ListItem>

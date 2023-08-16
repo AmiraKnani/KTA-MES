@@ -164,7 +164,7 @@ function Charte() {
   const selecRef = useRef()
 
 
-  const [posts, setPosts] = useState([]);
+  const [posts, setPosts] = useState([0]);
   useEffect(() => {
     fetch('http://localhost:5000/api/Poste')
       .then(response => response.json())

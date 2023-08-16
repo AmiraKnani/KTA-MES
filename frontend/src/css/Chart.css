@@ -135,6 +135,14 @@
   align-items: center;
 }
 
+@media (max-width: 768px) {
+  .header-chart {
+    font-size:small; 
+    
+    text-align: center;
+  }
+}
+
 .filterBy{
   color: #334D6E;
   padding-bottom: 15px;
