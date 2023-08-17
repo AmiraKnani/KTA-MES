@@ -13,7 +13,7 @@ function Taux(props) {
   //TRS
   async function getTRS() {
     try {
-      const response = await axios.get(process.env.BASEURL+"TRS");
+      const response = await axios.get(baseUrl + "TRS");
       const TRS = response.data.data;
       return TRS;
     } catch (error) {
@@ -35,7 +35,7 @@ function Taux(props) {
   //TD
   async function getTD() {
     try {
-      const response = await axios.get(process.env.BASEURL+"TD");
+      const response = await axios.get(baseUrl + "TD");
       const TD = response.data.data;
       return TD;
     } catch (error) {
@@ -56,7 +56,7 @@ function Taux(props) {
   //TP
   async function getTP() {
     try {
-      const response = await axios.get(process.env.BASEURL+"TP");
+      const response = await axios.get(baseUrl + "TP");
       const TP = response.data.data;
       return TP;
     } catch (error) {
@@ -77,7 +77,7 @@ function Taux(props) {
   //TQ
   async function getTQ() {
     try {
-      const response = await axios.get(process.env.BASEURL+"TQ");
+      const response = await axios.get(baseUrl + "TQ");
       const TQ = response.data.data;
       return TQ;
     } catch (error) {
@@ -98,7 +98,7 @@ function Taux(props) {
   //TRG
   async function getTRG() {
     try {
-      const response = await axios.get(process.env.BASEURL+"TRG");
+      const response = await axios.get(baseUrl + "TRG");
       const TRG = response.data.data;
       return TRG;
     } catch (error) {

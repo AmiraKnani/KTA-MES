@@ -8,6 +8,7 @@ import TextareaAutosize from '@mui/base/TextareaAutosize';
 import Footer from '../../components/Footer'
 import axios from 'axios';
 import { Link, useNavigate } from 'react-router-dom';
+import baseUrl from "../utils/baseUrl"
 
 export const ContactUs = () => {
   const form = useRef();
@@ -36,7 +37,7 @@ export const ContactUs = () => {
     }
   
     try {
-      const response = await axios.post(process.env.BASEURL+'userAdd', data);
+      const response = await axios.post(baseUrl + 'userAdd', data);
   
       
         toast.success('User added successfully', {

@@ -20,7 +20,7 @@ function Seance(props) {
 
   async function getNbrPoste() {
     try {
-      const response = await axios.get(process.env.BASEURL+'count');
+      const response = await axios.get(baseUrl + 'count');
       const nbrPoste = response.data.data; 
       console.log(nbrPoste)
       return nbrPoste;

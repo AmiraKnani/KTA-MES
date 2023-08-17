@@ -64,7 +64,7 @@ function Table() {
   const [selectedImageUrl, setSelectedImageUrl] = useState(null);
 
   useEffect(() => {
-    fetch(process.env.BASEURL+'getTables')
+    fetch(baseUrl + 'getTables')
       .then((response) => response.json())
       .then((data) => {
         setPosts(data.data);
@@ -113,7 +113,7 @@ function Table() {
 
     const fetchPostData = async () => {
       try {
-        const responseTu = await fetch(process.env.BASEURL+`getTu?poste=${post['Code Poste']}`);
+        const responseTu = await fetch(baseUrl + `getTu?poste=${post['Code Poste']}`);
         const dataTu = await responseTu.json();
         setAvgTu(dataTu.data);
       } catch (error) {
@@ -121,7 +121,7 @@ function Table() {
       }
 
       try {
-        const responseTa = await fetch(process.env.BASEURL+`getTa?poste=${post['Code Poste']}`);
+        const responseTa = await fetch(baseUrl + `getTa?poste=${post['Code Poste']}`);
         const dataTa = await responseTa.json();
         setAvgTa(dataTa.data);
       } catch (error) {
