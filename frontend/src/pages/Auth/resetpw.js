@@ -8,7 +8,7 @@ import KTAimg from '../../images/KTA.png'
 import '../../css/App.css'
 import Footer from '../../components/Footer';
 import baseUrl from "../utils/baseUrl"
-
+const frontUrl = process.env.FRONT
 
 function Resetpw() {
 //verify if the email exists
@@ -22,7 +22,7 @@ const handleSubmitemail = async (event) => {
 
   try {
     // first check if the user exists
-    const checkUserResponse = await axios.get(`http://localhost:3001/api/checkU?email=${email.value}`);
+    const checkUserResponse = await axios.get(frontUrl +`/api/checkU?email=${email.value}`);
     if (checkUserResponse.data.status === 'error') {
       toast.error(checkUserResponse.data.message, {
         position: "top-right",
@@ -38,7 +38,7 @@ const handleSubmitemail = async (event) => {
     }
 
     // if user exists, proceed with sending the code
-    const response = await axios.post('http://localhost:3001/api/coderequest', data);
+    const response = await axios.post(frontUrl+'/api/coderequest', data);
     console.log("Axios response data:", response.data);
     if (response.data.success) {
       let code = response.data.code;
@@ -51,7 +51,7 @@ const handleSubmitemail = async (event) => {
           code: code
         }
       };
-      axios.post('http://localhost:3001/send-email', sendEmailData)
+      axios.post(frontUrl +'/send-email', sendEmailData)
         .then(function (response) {
           console.log('SUCCESS!', response.status, response.text);
         }, function (error) {

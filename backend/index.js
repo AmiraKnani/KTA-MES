@@ -13,7 +13,9 @@ app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
 
 app.use(cors({
-  origin: 'http://localhost:3001',
+
+  origin: ['http://192.168.2.249:3001/', 'http://41.226.34.213/','http://localhost:3001', 'http://localhost:3001/','http://41.226.34.213:3001/' ,'http://41.226.34.213']
+
 }));
 
 let verificationCodes = {}; 
