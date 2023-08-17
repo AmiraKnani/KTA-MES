@@ -166,7 +166,7 @@ function Charte() {
 
   const [posts, setPosts] = useState([0]);
   useEffect(() => {
-    fetch(baseUrl + "Poste")
+    fetch(baseUrl + "/Poste")
       .then((response) => response.json())
       .then((data) => {
         const fetchedPosts = data.posts.map((post, index) => {
@@ -189,7 +189,7 @@ function Charte() {
   const [fetchedOperations, setFetchedOperations] = useState([]);
   // Fetch operations
   useEffect(() => {
-    fetch(baseUrl + "Operation")
+    fetch(baseUrl + "/Operation")
       .then((response) => response.json())
       .then((data) => {
         const fetchedOperations = data.map((operation) => ({
@@ -204,7 +204,7 @@ function Charte() {
   useEffect(() => {
     if (selectedOperation) {
       fetch(
-        baseUrl + `OP?designationOperation=${selectedOperation.value}`
+        baseUrl + `/OP?designationOperation=${selectedOperation.value}`
       )
         .then((response) => response.json())
         .then((data) => {
@@ -239,7 +239,7 @@ function Charte() {
   const [shouldDisplayData, setShouldDisplayData] = useState(false);
 
   useEffect(() => {
-    fetch(baseUrl + "Matin")
+    fetch(baseUrl + "/Matin")
       .then((response) => response.json())
       .then((data) => {
         const fetchedPosts = data.posts.map((post, index) => {
@@ -265,7 +265,7 @@ function Charte() {
   const [shouldDisplayData1, setShouldDisplayData1] = useState(false);
 
   useEffect(() => {
-    fetch(baseUrl + "Soir")
+    fetch(baseUrl + "/Soir")
       .then((response) => response.json())
       .then((data) => {
         const fetchedPosts = data.posts.map((post, index) => {
@@ -291,7 +291,7 @@ function Charte() {
   const [shouldDisplayData2, setShouldDisplayData2] = useState(false);
 
   useEffect(() => {
-    fetch(baseUrl + "Nuit")
+    fetch(baseUrl + "/Nuit")
       .then((response) => response.json())
       .then((data) => {
         const fetchedPosts = data.posts.map((post, index) => {
@@ -323,7 +323,7 @@ function Charte() {
   const handleButtonClick3 = () => {
     console.log(formattedDate);
     // Appending formattedDate to the fetch URL
-    fetch(baseUrl + `Jour?date=${formattedDate}`)
+    fetch(baseUrl + `/Jour?date=${formattedDate}`)
       .then((response) => response.json())
       .then((data) => {
         const fetchedPosts = data.posts.map((post, index) => {
@@ -348,7 +348,7 @@ function Charte() {
   const [shouldDisplayData9, setShouldDisplayData9] = useState(false);
 
   const handleButtonClick9 = () => {
-    fetch(baseUrl + `Semaine?date=${formattedDate}`)
+    fetch(baseUrl + `/Semaine?date=${formattedDate}`)
       .then((response) => response.json())
       .then((data) => {
         const fetchedPosts = data.posts.map((post, index) => {
@@ -375,7 +375,7 @@ function Charte() {
     console.log(formattedDate1);
     console.log(formattedDate2);
     fetch(
-      baseUrl + `Mois?date=${formattedDate1}&annee=${formattedDate2}`
+      baseUrl + `/Mois?date=${formattedDate1}&annee=${formattedDate2}`
     )
       .then((response) => response.json())
       .then((data) => {
@@ -402,7 +402,7 @@ function Charte() {
   useEffect(() => {
     // Appending formattedDate to the fetch URL
     console.log(year);
-    fetch(baseUrl + `getTrimestre1?annee=${year}`)
+    fetch(baseUrl + `/getTrimestre1?annee=${year}`)
       .then((response) => response.json())
       .then((data) => {
         const fetchedPosts = data.posts.map((post, index) => {
@@ -430,7 +430,7 @@ function Charte() {
 
   useEffect(() => {
     // Appending formattedDate to the fetch URL
-    fetch(baseUrl + `getTrimestre2?annee=${year}`)
+    fetch(baseUrl + `/getTrimestre2?annee=${year}`)
       .then((response) => response.json())
       .then((data) => {
         const fetchedPosts = data.posts.map((post, index) => {
@@ -458,7 +458,7 @@ function Charte() {
 
   useEffect(() => {
     // Appending formattedDate to the fetch URL
-    fetch(baseUrl + `getTrimestre3?annee=${year}`)
+    fetch(baseUrl + `/getTrimestre3?annee=${year}`)
       .then((response) => response.json())
       .then((data) => {
         const fetchedPosts = data.posts.map((post, index) => {
@@ -486,7 +486,7 @@ function Charte() {
 
   useEffect(() => {
     // Appending formattedDate to the fetch URL
-    fetch(baseUrl + `getTrimestre4?annee=${year}`)
+    fetch(baseUrl + `/getTrimestre4?annee=${year}`)
       .then((response) => response.json())
       .then((data) => {
         const fetchedPosts = data.posts.map((post, index) => {
@@ -540,7 +540,7 @@ function Charte() {
         try {
           console.log("Fetching data with ID", selectedOptionState.value);
           const response = await fetch(
-            baseUrl + `getTp?id=${selectedOptionState.value}`
+            baseUrl + `/getTp?id=${selectedOptionState.value}`
           );
           if (!response.ok) {
             throw new Error(`HTTP error! status: ${response.status}`);
@@ -578,7 +578,7 @@ function Charte() {
         try {
           console.log("Fetching data with ID", selectedOptionState.value);
           const response = await fetch(
-            baseUrl + `getTq?id=${selectedOptionState.value}`
+            baseUrl + `/getTq?id=${selectedOptionState.value}`
           );
           if (!response.ok) {
             throw new Error(`HTTP error! status: ${response.status}`);
@@ -616,7 +616,7 @@ function Charte() {
         try {
           console.log("Fetching data with ID", selectedOptionState.value);
           const response = await fetch(
-            baseUrl + `getTrg?id=${selectedOptionState.value}`
+            baseUrl + `/getTrg?id=${selectedOptionState.value}`
           );
           if (!response.ok) {
             throw new Error(`HTTP error! status: ${response.status}`);
@@ -654,7 +654,7 @@ function Charte() {
         try {
           console.log("Fetching data with ID", selectedOptionState.value);
           const response = await fetch(
-            baseUrl + `getTre?id=${selectedOptionState.value}`
+            baseUrl + `/getTre?id=${selectedOptionState.value}`
           );
           if (!response.ok) {
             throw new Error(`HTTP error! status: ${response.status}`);
@@ -685,7 +685,7 @@ function Charte() {
   const [Tp1, setTp1] = useState([]);
 
   useEffect(() => {
-    fetch(baseUrl + "getTp1")
+    fetch(baseUrl + "/getTp1")
       .then((response) => response.json())
       .then((data) => {
         const fetchedPosts = data.data.map((post, index) => {
@@ -702,7 +702,7 @@ function Charte() {
   const [Tq1, setTq1] = useState([]);
 
   useEffect(() => {
-    fetch(baseUrl + "getTq1")
+    fetch(baseUrl + "/getTq1")
       .then((response) => response.json())
       .then((data) => {
         const fetchedPosts = data.data.map((post, index) => {
@@ -719,7 +719,7 @@ function Charte() {
   const [Trg, setTrg] = useState([]);
 
   useEffect(() => {
-    fetch(baseUrl + "getTrg1")
+    fetch(baseUrl + "/getTrg1")
       .then((response) => response.json())
       .then((data) => {
         const fetchedPosts = data.data.map((post, index) => {
@@ -736,7 +736,7 @@ function Charte() {
   const [Tre, setTre] = useState([]);
 
   useEffect(() => {
-    fetch(baseUrl + "getTre1")
+    fetch(baseUrl + "/getTre1")
       .then((response) => response.json())
       .then((data) => {
         const fetchedPosts = data.data.map((post, index) => {

@@ -95,7 +95,7 @@ const handleSubmitemail = async (event) => {
     if (pass1.value === pass2.value) {
       let data = { mdp: pass1.value, email: email } // send the password as 'mdp'
       try {
-        const response = await axios.put(baseUrl + `update`, data); 
+        const response = await axios.put(baseUrl + `/update`, data); 
         console.log(response.data)
         if (response.data.status === "success") { // check for 'status' instead of 'success' 
           toast.success('Password changed', {
@@ -148,7 +148,7 @@ const handleSubmitcode = async (event) => {
   var email = localStorage.getItem('resetMail');
   let data = { email: email, code: code.value }
   try {
-    const response = await axios.post(baseUrl + 'verifycode', data);
+    const response = await axios.post(baseUrl + '/verifycode', data);
     console.log(response.data); // Received response from the server
     if (response.data.verified) { // change 'success' to 'verified'
       code.value = ""

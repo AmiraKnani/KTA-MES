@@ -6,6 +6,7 @@ import { ExpandMore, ExpandLess } from '@material-ui/icons';
 import ProgressBar from 'react-bootstrap/ProgressBar';
 import '../../../css/Seance.css'
 import Card from './Card';
+import baseUrl from "../../utils/baseUrl"
 
 function Seance(props) {
   const [isCollapsed, setIsCollapsed] = useState(false);
@@ -20,7 +21,7 @@ function Seance(props) {
 
   async function getNbrPoste() {
     try {
-      const response = await axios.get(baseUrl + 'count');
+      const response = await axios.get(baseUrl + '/count');
       const nbrPoste = response.data.data; 
       console.log(nbrPoste)
       return nbrPoste;

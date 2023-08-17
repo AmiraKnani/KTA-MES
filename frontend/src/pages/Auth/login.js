@@ -50,7 +50,7 @@ function App() {
     let data = { email: uname.value, mdp: pass.value };
 
     try {
-      const response = await axios.post(baseUrl + 'users', data);
+      const response = await axios.post(baseUrl + '/users', data);
       
 
       if (response.data.data) {

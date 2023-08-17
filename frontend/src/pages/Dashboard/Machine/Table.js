@@ -26,7 +26,7 @@ import Footer from '../../../components/Footer';
 import prod from '../../../images/prod.png'
 import prod1 from '../../../images/prod1.png'
 import { Chart, PieController, ArcElement, CategoryScale, Legend, Tooltip } from 'chart.js';
-
+import baseUrl from "../../utils/baseUrl"
 Chart.register(PieController, ArcElement, CategoryScale, Legend, Tooltip);
 
 
@@ -64,7 +64,7 @@ function Table() {
   const [selectedImageUrl, setSelectedImageUrl] = useState(null);
 
   useEffect(() => {
-    fetch(baseUrl + 'getTables')
+    fetch(baseUrl + '/getTables')
       .then((response) => response.json())
       .then((data) => {
         setPosts(data.data);
@@ -113,7 +113,7 @@ function Table() {
 
     const fetchPostData = async () => {
       try {
-        const responseTu = await fetch(baseUrl + `getTu?poste=${post['Code Poste']}`);
+        const responseTu = await fetch(baseUrl + `/getTu?poste=${post['Code Poste']}`);
         const dataTu = await responseTu.json();
         setAvgTu(dataTu.data);
       } catch (error) {
@@ -121,7 +121,7 @@ function Table() {
       }
 
       try {
-        const responseTa = await fetch(baseUrl + `getTa?poste=${post['Code Poste']}`);
+        const responseTa = await fetch(baseUrl + `/getTa?poste=${post['Code Poste']}`);
         const dataTa = await responseTa.json();
         setAvgTa(dataTa.data);
       } catch (error) {

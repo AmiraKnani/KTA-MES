@@ -37,7 +37,7 @@ export const ContactUs = () => {
     }
   
     try {
-      const response = await axios.post(baseUrl + 'userAdd', data);
+      const response = await axios.post(baseUrl + '/userAdd', data);
   
       
         toast.success('User added successfully', {
