@@ -14,9 +14,6 @@ function App() {
     setPasswordVisible(!passwordVisible);
   };
 
-
-
-
   const [isSmallScreen, setIsSmallScreen] = useState(false);
 
   const navigate = useNavigate();
@@ -28,9 +25,6 @@ function App() {
       navigate('/dashboard');
     }
   }, []);
-
-
-
 
   useEffect(() => {
     const handleResize = () => {
@@ -49,17 +43,14 @@ function App() {
     };
   }, []);
 
-
-
-
-
   const handleSubmit = async (event) => {
     event.preventDefault();
     var { uname, pass } = document.forms[0];
     let data = { email: uname.value, mdp: pass.value };
 
     try {
-      const response = await axios.post('http://localhost:5000/api/users', data);
+      const response = await axios.post(process.env.BASEURL+'users', data);
+      
 
       if (response.data.data) {
         const user = response.data.data;
@@ -89,12 +80,6 @@ function App() {
 
   return (
     <>
-
-
-
-
-
-
       <div className="split-screen">
         <div className="left-section">
 
@@ -122,7 +107,7 @@ function App() {
                 </div>
 
               </div>
-              
+
               <div className="mdp"><Link to="/resetpw">Mot de passe oublié</Link></div>
               <Input id="ddd" type="button" value="Se Connecter" onClick={handleSubmit} />
               <div className="cont"><Link to="/contactus">Créer un compte</Link></div>

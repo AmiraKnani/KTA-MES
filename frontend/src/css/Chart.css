@@ -1,5 +1,3 @@
-
-
 .chart-container {
   width: 100%;
   height: 400px;
@@ -13,7 +11,6 @@
   .chart {
     width: 100%;
   }
-
 }
 
 @media (max-width: 480px) {
@@ -29,13 +26,11 @@
   color: grey;
   width: 25%;
   min-width: 250px;
-
 }
 
 .checkcontainer {
   display: flex;
   flex-wrap: wrap;
-  
 }
 
 .checkbox {
@@ -56,8 +51,6 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  
-
 }
 
 .parenttrs {
@@ -68,7 +61,7 @@
 }
 
 .custom-tooltip {
-  background-color: #20348A;
+  background-color: #20348a;
   border-radius: 4px;
   border: 1px solid #ccc;
   padding: 2px;
@@ -77,7 +70,7 @@
 }
 
 .custom-tooltip1 {
-  background-color: #1F69EF;
+  background-color: #1f69ef;
   border-radius: 4px;
   border: 1px solid #ccc;
   padding: 2px;
@@ -86,7 +79,7 @@
 }
 
 .custom-tooltip2 {
-  background-color: #3367A8;
+  background-color: #3367a8;
   border-radius: 4px;
   border: 1px solid #ccc;
   padding: 2px;
@@ -95,7 +88,7 @@
 }
 
 .custom-tooltip3 {
-  background-color: #C18A20;
+  background-color: #c18a20;
   border-radius: 4px;
   border: 1px solid #ccc;
   padding: 2px;
@@ -104,14 +97,13 @@
 }
 
 .custom-tooltip4 {
-  background-color: #5EA131;
+  background-color: #5ea131;
   border-radius: 4px;
   border: 1px solid #ccc;
   padding: 2px;
   width: 100%;
   height: 100%;
 }
-
 
 .Poste {
   margin-top: 10px;
@@ -126,34 +118,31 @@
 }
 
 .header-chart {
-  color: #334D6E;
+  color: #334d6e;
   font-size: large;
   padding: 16px;
   font-weight: bold;
   display: flex;
-  
+
   align-items: center;
 }
 
 @media (max-width: 768px) {
   .header-chart {
-    font-size:small; 
-    
+    font-size: small;
+
     text-align: center;
   }
 }
 
-.filterBy{
-  color: #334D6E;
+.filterBy {
+  color: #334d6e;
   padding-bottom: 15px;
   font-size: 15px;
 }
 
-
-
-
 .header-chart1 {
-  color: #334D6E;
+  color: #334d6e;
   font-size: large;
   padding: 16px;
   margin-left: 5%;
@@ -165,18 +154,18 @@
 }
 
 .header-chartP {
-  color: #334D6E;
+  color: #334d6e;
   font-size: large;
   padding: 16px;
-  font-weight:lighter;
+  font-weight: lighter;
   display: flex;
-  
-  align-items:normal;
+
+  align-items: normal;
 }
 
 .header-data {
   color: #626389;
-  font-size:medium;
+  font-size: medium;
   padding: 16px;
   margin-left: 5%;
   margin-right: 5%;
@@ -189,10 +178,7 @@
   min-height: 75px;
   background-color: #6d6fb3;
   margin-bottom: 1%;
-
 }
-
-
 
 .chartfilter {
   display: flex;
@@ -204,8 +190,6 @@
   /* Other styles for the first div */
 }
 
-
-
 .checkcontainer {
   display: flex;
 }
@@ -214,12 +198,11 @@
   flex: 1;
   padding: 20px;
   background-color: #ffffff;
-
 }
 
 .collapsible-taux {
   border: 3px solid transparent;
-  box-shadow: 0 0 10px rgba(76, 78, 161, 0.3); 
+  box-shadow: 0 0 10px rgba(76, 78, 161, 0.3);
   border-radius: 8px;
   width: 250%;
   display: inline-block;
@@ -230,7 +213,7 @@
 
 .collapsible-tauxT {
   border: 3px solid transparent;
-  box-shadow: 0 0 10px rgba(76, 78, 161, 0.3); 
+  box-shadow: 0 0 10px rgba(76, 78, 161, 0.3);
   border-radius: 8px;
   width: 70%;
   display: inline-block;
@@ -241,7 +224,7 @@
 
 .collapsible-table {
   border: 3px solid transparent;
-  box-shadow: 0 0 10px rgba(76, 78, 161, 0.3); 
+  box-shadow: 0 0 10px rgba(76, 78, 161, 0.3);
   border-radius: 8px;
   width: 100%;
   display: inline-block;
@@ -251,7 +234,6 @@
   height: 60px;
   cursor: pointer;
 }
-
 
 .parent-container {
   display: flex;
@@ -263,40 +245,37 @@
 
 .filter-component {
   border: 3px solid transparent;
-  box-shadow: 0 0 10px rgba(76, 78, 161, 0.3); 
+  box-shadow: 0 0 10px rgba(76, 78, 161, 0.3);
   border-radius: 8px;
   display: inline-block;
   vertical-align: middle;
   margin-bottom: 10px;
-  
 }
 
 .filter-component1 {
   border: 3px solid transparent;
-  box-shadow: 0 0 10px rgba(76, 78, 161, 0.3); 
+  box-shadow: 0 0 10px rgba(76, 78, 161, 0.3);
   border-radius: 8px;
   display: inline-block;
   vertical-align: middle;
   margin-bottom: 10px;
   height: 340px;
   width: 450px;
-  overflow: hidden; 
+  overflow: hidden;
 }
 
-
-
-.search-component{
+.search-component {
   border: 3px solid transparent;
-  box-shadow: 0 0 10px rgba(76, 78, 161, 0.3); 
+  box-shadow: 0 0 10px rgba(76, 78, 161, 0.3);
   border-radius: 8px;
   display: inline-block;
   vertical-align: middle;
   margin-bottom: 10px;
 }
 
-.selectcont{
+.selectcont {
   border: 3px solid transparent;
-  box-shadow: 0 0 10px rgba(76, 78, 161, 0.3); 
+  box-shadow: 0 0 10px rgba(76, 78, 161, 0.3);
   border-radius: 8px;
   margin-bottom: 10px;
 }
@@ -304,18 +283,15 @@
 .container {
   display: flex;
   flex-direction: column;
-  
-  
 }
 
 .container1 {
   display: flex;
   flex-direction: column;
-  
 }
 
 .collapsible-container {
-  max-height: 265px; 
+  max-height: 265px;
   max-width: 900px;
   overflow-y: scroll;
   overflow-x: hidden;
@@ -348,29 +324,22 @@
   background-color: #f0f0f0; /* Or any other color you prefer */
 }
 
-.header-chart, .header-chartP {
+.header-chart,
+.header-chartP {
   display: flex;
-  justify-content: space-between; 
-  align-items: center; 
+  justify-content: space-between;
+  align-items: center;
 }
 
 .image-container {
-  padding-left: 65px; 
+  padding-left: 65px;
   width: 120px;
   height: 120px;
-  
-
 }
 
 .pie-chart-container {
-  width: 180px; 
-  height: 180px; 
+  width: 180px;
+  height: 180px;
   margin-top: -15px;
   margin-left: 5px;
 }
-
-
-
-
-
-

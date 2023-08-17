@@ -36,7 +36,7 @@ export const ContactUs = () => {
     }
   
     try {
-      const response = await axios.post('http://localhost:5000/api/userAdd', data);
+      const response = await axios.post(process.env.BASEURL+'userAdd', data);
   
       
         toast.success('User added successfully', {
